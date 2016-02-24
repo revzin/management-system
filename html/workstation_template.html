@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>
+			%MODULE_NAME%
+		</title>
+		<link rel='stylesheet' href='style.css'>
+	</head>
+
+	<body>
+		<div id = 'userdata'> 
+			<table>
+				<tbody> 
+					<tr> 
+						<td> 
+							Пользователь: 
+						</td> 
+						<td>
+							<i>%USER_NAME%</i>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Должность: 
+						</td>
+						<td>
+							<i>%USER_JOB%</i>.
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		<div id = 'container'> 
+			<div id = 'left'>
+				<div id = 'logo'> 
+					<img src="..\img\iu4_logo.jpg" id = 'logo-img' alt="iu4 logo">
+				</div>
+				<div id = 'nav'> 
+					<h3> Навигация </h3> <br />
+				
+					<div> 
+						%NAV_GENERATE% 
+					</div>
+				</div>	
+			</div >
+		
+			<div id = 'right'> 
+				<div id = 'header'> 
+					<h1> АСУ управления производством </h1>
+				</div>
+				<hr />
+				<div id = 'content-box'> 
+					<h2> %MODULE_NAME% </h2>
+				<div>
+					%MODULE_CONTENT_GENERATE%
+				</div>
+			</div>
+			
+		</div>  
+		
+		<div id = 'footer'> Пример АСУ по курсу КТБД. 2016, выполнил Г. Ревзин ИУ4-82. </div>
+	</body>
+</html>
