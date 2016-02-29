@@ -1,7 +1,7 @@
 <?php
 
-define('ORACLE_USER', 	'SCOTT');
-define('ORACLE_PWD', 	'TIGER');
-define('ORACLE_SERIVCE', 'ORCL');
+define('ORACLE_USER', 		'SCOTT');
+define('ORACLE_PASSWORD',	'TIGER');
+define('ORACLE_SERVICE', 	'ORCL');
 
 ?>

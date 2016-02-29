@@ -1,24 +1,23 @@
+﻿<?php
+
+
+
+?>
+
+
 <html>
 <head>
 <title> DA </title>
 </head>
 <body>
-
 <?php
 
-LogToApache($Message) {
-        $stderr = fopen('php://stdout', 'w'); 
-        fwrite($stderr,$Message); 
-        fclose($stderr); 
-}
+require("../php/db_install_tools.php");
 
-error_reporting( E_ALL );
+echo OracleTestDatabaseInstallation();
 
-LogToApache("govno");
 
 ?>
-
-ss
 
 </body>
 </html>
