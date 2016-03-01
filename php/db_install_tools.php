@@ -3,6 +3,8 @@
 require('common/ora_queries.php');
 require('common/ora_session.php');
 
+define('SQL_SCRIPT_PATH', '../sql/');
+
 $check_table_names = array('employee', 'unit', 'warehouse');
 
 function db_tables_exist($db_table_names)
@@ -49,6 +51,22 @@ function OracleTestDatabaseInstallation()
 	
 	OracleDisconnect($dbc);
 }
+
+
+function OracleRunSQLScript($sql_filename)
+{
+	$dbc = OracleConnect();
+	echo file_get_contents(SQL_SCRIPT_PATH . $sql_filename);
+	$query = OCIParse($dbc, file_get_contents(SQL_SCRIPT_PATH . $sql_filename));
+	OCIExecute($query);
+	$err = OCIError($query);
+	if (FALSE != $err) {
+		error_log('ERROR: Failed executing ' . $sql_filename . ' ' . var_dump($err));
+	}
+	
+	OracleDisconnect($dbc);	
+}
+
 
 ?>
 
