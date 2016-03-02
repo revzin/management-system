@@ -32,4 +32,13 @@ define("AMS_BOMTYPE_TEMPLATE",		0);
 define("AMS_BOMTYPE_WORKING",		1);
 define("AMS_BOMTYPE_FREEZE",		2);
 
+// Разрешения
+define("AMS_EMPPERM_VIEW_EMPLOYEES", 	1);
+define("AMS_EMPPERM_EDIT_EMPLOYEES",	2);
+define("AMS_EMPPERM_VIEW_SELF",			3);
+define("AMS_EMPPERM_VIEW_OWN_GROUP",	4);
+define("AMS_EMMEERM_HIREFIRE",				5);
+define("AMS_EMMEPRM_HIRE",				6);
+
+
 ?>

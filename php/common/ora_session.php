@@ -9,12 +9,29 @@ function OracleConnect()
 		return false;
 	}
 	return $dbc;
+
+	
+function OracleConnectSafe() 
+{
+	$dbc = OracleConnect();
+	if (!$dbc)
+		die("db failure");
+	else
+		return $dbc;
 }
 
 function OracleDisconnect($dbc)
 {
 	OCICommit($dbc);
 	OCILogoff($dbc);
+}
+
+function OracleQuickQuery($str)
+{
+	$dbc = OracleConnectSafe();
+	$q = OCIParse($str);
+	OCIExecute($q);
+	$result = array();
 }
 
 ?>
