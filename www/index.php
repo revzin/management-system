@@ -12,10 +12,23 @@
 <body>
 <?php
 
-require("../php/db_install_tools.php");
+require("../php/common/ora_session.php");
+require("../php/common/ora_queries.php");
 
-echo OracleTestDatabaseInstallation();
+$depts = OracleQuickQuery('SELECT dname, loc from DEPT', array('dname', 'loc'));
 
+foreach($depts as $d) {
+	echo $d['dname'] . '  ' . $d['loc'] . '<br />';
+}
+
+
+?>
+
+<br /> <hr /> <br />
+
+<?php
+
+echo QueryStringReplace(QUERY_GET_USER_ROLE, 'id', 4);
 
 ?>
 

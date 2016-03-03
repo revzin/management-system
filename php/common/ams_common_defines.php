@@ -26,6 +26,7 @@ define("AMS_ROLE_CTL", 				2);
 define("AMS_ROLE_HR",				3);
 define("AMS_ROLE_WM", 				4);
 define("AMS_ROLE_ADM", 				5);
+define("AMS_ROLE_FIRED",			6);
 
 // Типы BOM
 define("AMS_BOMTYPE_TEMPLATE",		0);

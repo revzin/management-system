@@ -2,14 +2,22 @@
 require('common/ams_common_defines.php');
 require('common/ora_session.php');
 
-function permission_by_role($role)
+function permissions_by_role($role)
 {
 	switch ($role) {
+		case AMS_ROLE_ADM: {
+			return array(
+						AMS_ADMPERM_ADM
+						)
+		}
 		case AMS_ROLE_MGR: {
 			return array(
 						AMS_EMPPERM_VIEW_EMPLOYEES,
 						AMS_EMPPERM_EDIT_EMPLOYEES,
-						AMS_EMPPERM_HIREFIRE
+						AMS_EMPPERM_HIREFIRE,
+						
+						AMS_WRHSPERM_VIEW,
+						AMS_WRHSPERM_EDIT
 						);
 		}
 		case AMS_ROLE_HR: {
@@ -20,8 +28,12 @@ function permission_by_role($role)
 		}
 		case AMS_ROLE_ASMY_WRK: {
 			return array(
-						AMS_EMPPERM_VIEW_GROUP
+						AMS_EMPPERM_VIEW_GROUP,
+						
+						AMS_WRHSPERM_VIEW
 						)
+		default:
+			return FALSE;
 		}
 	}
 }
@@ -30,8 +42,9 @@ function permission_by_role($role)
 
 function AMSEmployeeGetPermissions($id) 
 {
-	OracleQuickQuery(QueryStringReplace(QUERY_GET_USER_ROLE, array($id));
-	
+	$role = OracleQuickQuery(QueryStringReplace(QUERY_GET_USER_ROLE, 'id', $id), 'emp_role');
+	$role = int($role);
+	return permission_by_role($role);
 }
 
 function AMSEmployeeHasPermission($id, $permission)
@@ -51,8 +64,6 @@ function AMSEmployeeSetupSession($id)
 
 }
 
-
-$dbc = OracleConnect();
 
 
 ?>

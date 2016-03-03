@@ -27,7 +27,7 @@ CREATE TABLE employee
 		-- фамилия
 	emp_email		VARCHAR2(50) 	NOT NULL,
 		-- электропочта
-	emp_phone 		INTEGER 		NOT NULL,
+	emp_phone 		VARCHAR2(50)	NOT NULL,
 		-- телефон
 	emp_salary 		INTEGER 		NOT NULL,
 		-- зп
@@ -40,6 +40,23 @@ CREATE TABLE employee
 )
 NESTED TABLE emp_journal 
 STORE AS emp_journals;
+
+PROMPT удаление триггера автоинкремента
+DROP TRIGGER t_emp_auto_increment;
+DROP SEQUENCE emp_id_incr;
+CREATE SEQUENCE emp_id_incr;
+
+PROPMT создание триггера автоинкремента
+CREATE TRIGGER t_emp_auto_increment
+BEFORE INSERT ON employee
+FOR EACH ROW
+BEGIN
+	SELECT emp_id_incr.NEXTVAL
+	INTO :new.id
+	FROM dual;
+END;
+
+
 
 PROMPT удаление таблицы unit;
 DROP TABLE IF EXISTS unit;

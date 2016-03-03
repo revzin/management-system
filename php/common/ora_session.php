@@ -9,7 +9,7 @@ function OracleConnect()
 		return false;
 	}
 	return $dbc;
-
+}
 	
 function OracleConnectSafe() 
 {
@@ -26,12 +26,22 @@ function OracleDisconnect($dbc)
 	OCILogoff($dbc);
 }
 
-function OracleQuickQuery($str)
+function OracleQuickQuery($query_string, $key_array)
 {
 	$dbc = OracleConnectSafe();
-	$q = OCIParse($str);
+	$q = OCIParse($dbc, $query_string);
 	OCIExecute($q);
+	
 	$result = array();
+	$i = 0;
+	while (OCIFetch($q)) {
+		foreach($key_array as $k) {
+			$result[$i][strval($k)] = OCIResult($q, strtoupper(strval($k)));
+		}
+		$i += 1;
+	}
+	OracleDisconnect($dbc);
+	return $result;
 }
 
 ?>
