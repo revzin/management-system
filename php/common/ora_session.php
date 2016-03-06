@@ -1,5 +1,5 @@
 <?php
-require("ora_user.php");
+require_once("ora_user.php");
 
 function OracleConnect() 
 {

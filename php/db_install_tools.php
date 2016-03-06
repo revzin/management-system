@@ -1,7 +1,7 @@
 <?php
 
-require('common/ora_queries.php');
-require('common/ora_session.php');
+require_once('common/ora_queries.php');
+require_once('common/ora_session.php');
 
 define('SQL_SCRIPT_PATH', '../sql/');
 

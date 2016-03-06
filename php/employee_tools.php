@@ -1,6 +1,6 @@
 <?php
-require('common/ams_common_defines.php');
-require('common/ora_session.php');
+require_once('common/ams_common_defines.php');
+require_once('common/ora_session.php');
 
 function permissions_by_role($role)
 {
