@@ -31,7 +31,7 @@ CREATE TABLE employee
 		-- телефон
 	emp_salary 		INTEGER 		NOT NULL,
 		-- зп
-	emp_login 		VARCHAR2(20) 	NOT NULL,
+	emp_login 		VARCHAR2(20) 	NOT NULL	UNIQUE,
 		-- логин
 	emp_password 	VARCHAR2(20) 	NOT NULL,
 		-- пароль
@@ -44,7 +44,10 @@ STORE AS emp_journals;
 PROMPT удаление триггера автоинкремента
 DROP TRIGGER t_emp_auto_increment;
 DROP SEQUENCE emp_id_incr;
-CREATE SEQUENCE emp_id_incr;
+
+CREATE SEQUENCE emp_id_incr 
+	START WITH 10 
+	INCREMENT BY 1;
 
 PROPMT создание триггера автоинкремента
 CREATE TRIGGER t_emp_auto_increment
@@ -52,9 +55,11 @@ BEFORE INSERT ON employee
 FOR EACH ROW
 BEGIN
 	SELECT emp_id_incr.NEXTVAL
-	INTO :new.id
+	INTO :NEW.emp_id
 	FROM dual;
 END;
+PROMPT включение триггера;
+ALTER TRIGGER t_emp_auto_increment ENABLE;
 
 
 

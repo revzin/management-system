@@ -28,15 +28,17 @@ function OracleDisconnect($dbc)
 
 function OracleQuickQuery($query_string, $key_array)
 {
+
 	$dbc = OracleConnectSafe();
 	$q = OCIParse($dbc, $query_string);
 	OCIExecute($q);
-	
 	$result = array();
 	$i = 0;
+	
 	while (OCIFetch($q)) {
 		foreach($key_array as $k) {
 			$result[$i][strval($k)] = OCIResult($q, strtoupper(strval($k)));
+			echo '$k';
 		}
 		$i += 1;
 	}
