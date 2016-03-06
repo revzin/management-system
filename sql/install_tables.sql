@@ -1,10 +1,7 @@
-PROMPT удаление таблицы employee;
 DROP TABLE employee;
 
-PROMPT удаление  типа jrnl_table;
 DROP TYPE jrnl_table;
 
-PROMPT пересоздание типа journal_t;
 CREATE OR REPLACE TYPE journal_t AS OBJECT  -- запись в журнале
 (
 	j_date			TIMESTAMP,
@@ -12,10 +9,8 @@ CREATE OR REPLACE TYPE journal_t AS OBJECT  -- запись в журнале
 	j_text			VARCHAR2(200)
 );
 
-PROMPT пересоздание типа jrnl_table; -- таблица записей в ЛД
-CREATE OR REPLACE TYPE jrnl_table IS TABLE OF journal_t;
 
-PROMPT создание таблицы employee;
+CREATE OR REPLACE TYPE jrnl_table IS TABLE OF journal_t;
 CREATE TABLE employee
 (
 	emp_id 			INTEGER 		PRIMARY KEY,
@@ -41,7 +36,6 @@ CREATE TABLE employee
 NESTED TABLE emp_journal 
 STORE AS emp_journals;
 
-PROMPT удаление триггера автоинкремента
 DROP TRIGGER t_emp_auto_increment;
 DROP SEQUENCE emp_id_incr;
 
@@ -49,8 +43,7 @@ CREATE SEQUENCE emp_id_incr
 	START WITH 10 
 	INCREMENT BY 1;
 
-PROPMT создание триггера автоинкремента
-CREATE TRIGGER t_emp_auto_increment
+CREATE OR REPLACE TRIGGER t_emp_auto_increment
 BEFORE INSERT ON employee
 FOR EACH ROW
 BEGIN
@@ -58,7 +51,6 @@ BEGIN
 	INTO :NEW.emp_id
 	FROM dual;
 END;
-PROMPT включение триггера;
 ALTER TRIGGER t_emp_auto_increment ENABLE;
 
 
