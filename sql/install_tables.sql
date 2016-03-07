@@ -1,48 +1,57 @@
+п»їPROMPT РЈРґР°Р»РµРЅРёРµ С‚Р°Р±Р»РёС†С‹ employee
 DROP TABLE employee;
-
+PROMPT РЈРґР°Р»РµРЅРёРµ С‚РёРїР° jrnl_table
 DROP TYPE jrnl_table;
 
-CREATE OR REPLACE TYPE journal_t AS OBJECT  -- запись в журнале
+PROMPT РџРµСЂРµСЃРѕР·РґР°РЅРёРµ С‚РёРїР° journal_t
+CREATE OR REPLACE TYPE journal_t AS OBJECT
 (
 	j_date			TIMESTAMP,
 	j_author_id		INTEGER,
 	j_text			VARCHAR2(200)
 );
+/
 
+PROMPT РџРµСЂРµСЃРѕР·РґР°РЅРёРµ С‚РёРїР° jrnl_table
+CREATE OR REPLACE TYPE jrnl_table 
+IS TABLE OF journal_t;
+/
 
-CREATE OR REPLACE TYPE jrnl_table IS TABLE OF journal_t;
+PROMPT РЎРѕР·РґР°РЅРёРµ С‚Р°Р±Р»РёС†С‹ employee
 CREATE TABLE employee
 (
 	emp_id 			INTEGER 		PRIMARY KEY,
 	emp_role 		INTEGER 		NOT NULL,
-		-- роль по AMS_ROLE
+		-- СЂРѕР»СЊ РїРѕ AMS_ROLE
 	emp_name 		VARCHAR2(50) 	NOT NULL,
-		-- имя
+		-- РёРјСЏ
 	emp_surname 	VARCHAR2(50) 	NOT NULL,
-		-- фамилия
+		-- С„Р°РјРёР»РёСЏ
 	emp_email		VARCHAR2(50) 	NOT NULL,
-		-- электропочта
+		-- СЌР»РµРєС‚СЂРѕРїРѕС‡С‚Р°
 	emp_phone 		VARCHAR2(50)	NOT NULL,
-		-- телефон
+		-- С‚РµР»РµС„РѕРЅ
 	emp_salary 		INTEGER 		NOT NULL,
-		-- зп
+		-- Р·Рї
 	emp_login 		VARCHAR2(20) 	NOT NULL	UNIQUE,
-		-- логин
+		-- Р»РѕРіРёРЅ
 	emp_password 	VARCHAR2(20) 	NOT NULL,
-		-- пароль
+		-- РїР°СЂРѕР»СЊ
 	emp_journal		jrnl_table		
-		-- записи в ЛД
+		-- Р·Р°РїРёСЃРё РІ Р›Р”
 )
 NESTED TABLE emp_journal 
 STORE AS emp_journals;
 
-DROP TRIGGER t_emp_auto_increment;
+PROMPT РЈРґР°Р»РµРЅРёРµ РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚Рё Р°РІС‚РѕРёРЅРєСЂРµРјРµРЅС‚Р° employee
 DROP SEQUENCE emp_id_incr;
 
+PROMPT РЎРѕР·РґР°РЅРёРµ РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚Рё Р°РІС‚РѕРёРЅРєСЂРµРјРµРЅС‚Р° employee
 CREATE SEQUENCE emp_id_incr 
 	START WITH 10 
 	INCREMENT BY 1;
 
+PROMPT РЎРѕР·РґР°РЅРёРµ С‚СЂРёРіРіРµСЂР° Р°РІС‚РѕРёРЅРєСЂРµРјРµРЅС‚Р° employee
 CREATE OR REPLACE TRIGGER t_emp_auto_increment
 BEFORE INSERT ON employee
 FOR EACH ROW
@@ -51,32 +60,34 @@ BEGIN
 	INTO :NEW.emp_id
 	FROM dual;
 END;
+/
+
+PROMPT Р’РєР»СЋС‡РµРЅРёРµ С‚СЂРёРіРіРµСЂР° Р°РІС‚РѕРёРЅРєСЂРµРјРµРЅС‚Р° employee
 ALTER TRIGGER t_emp_auto_increment ENABLE;
 
+DROP TABLE  unit;
 
-
-PROMPT удаление таблицы unit;
-DROP TABLE IF EXISTS unit;
-PROMPT создание таблицы unit;
 CREATE TABLE  unit
 (
 	u_id			INTEGER 		PRIMARY KEY,
 	u_serial		INTEGER			NOT NULL,
-		-- серийный номер
+		-- СЃРµСЂРёР№РЅС‹Р№ РЅРѕРјРµСЂ
 	u_bom_table		VARCHAR(50)		NOT NULL,
-		-- табличка с BOM
+		-- С‚Р°Р±Р»РёС‡РєР° СЃ BOM
 	u_asmy_mng_id	INTEGER,
-		-- менеджер
+		-- РјРµРЅРµРґР¶РµСЂ
 	u_asmy_work_id	INTEGER,
-		-- монтажник
+		-- РјРѕРЅС‚Р°Р¶РЅРёРє
 	u_asmy_cont_id	INTEGER,
-		-- контролёр
+		-- РєРѕРЅС‚СЂРѕР»С‘СЂ
 	u_state			INTEGER,
-		-- состояние по AMS_STATE
+		-- СЃРѕСЃС‚РѕСЏРЅРёРµ РїРѕ AMS_STATE
 	u_ord_date		TIMESTAMP		NOT NULL,
-		-- дата заказа
+		-- РґР°С‚Р° Р·Р°РєР°Р·Р°
 	u_asm_date		TIMESTAMP,
-		-- дата сборки
+		-- РґР°С‚Р° СЃР±РѕСЂРєРё
 	u_ctrl_date		TIMESTAMP
-		-- дата контроля
+		-- РґР°С‚Р° РєРѕРЅС‚СЂРѕР»СЏ
 );
+
+COMMIT;

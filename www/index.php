@@ -3,7 +3,9 @@
 
 
 ?>
+<?PHP header("Content-Type: text/html; charset=utf-8");?>
 
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 
 <html>
 <head>
@@ -11,25 +13,20 @@
 </head>
 <body>
 <?php
-
 require_once("../php/common/ora_session.php");
 require_once("../php/common/ora_queries.php");
+require_once("../php/employee_tools.php");
 
+AMSEmployeeRedirectAuth();
 
-$depts = OracleQuickQuery('SELECT emp_name FROM employee', array('emp_name'));
-
-
-foreach($depts as $dept) {
-	echo strval($dept['emp_name']) . '   <br />';
-}
-
+echo var_dump($_SESSION); 
 
 ?>
 
 <br /> <hr /> <br />
 
 <?php
-
+	
 ?>
 
 </body>

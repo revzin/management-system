@@ -1,3 +1,4 @@
+-- НЕ ЗАПУСКАТЬ КОПИ-ПАСТОМ, ТОЛЬКО ЧЕРЕЗ @!
 INSERT INTO employee
 	(
 	emp_role, 
@@ -154,3 +155,4 @@ VALUES
 	)
 );
 
+COMMIT;
