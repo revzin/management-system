@@ -30,7 +30,7 @@ function OracleDisconnect($dbc)
 function OracleGetDBEncoding()
 {
 	$rows = array();
-	OracleQuickQuery(QUERY_GET_ENCODING, "value", $rows, TRUE);
+	OracleQuickReadQuery(QUERY_GET_ENCODING, "value", $rows, TRUE);
 	$enc = $rows[0];
 	if ($enc == 'CL8MSWIN1251')
 		return 'CP1251';
@@ -72,7 +72,7 @@ function OCIResultCustom($statement, $colname)
 }
 
 
-function OracleQuickQuery($query_string, $keys, &$result, $use_default_ocires = FALSE)
+function OracleQuickReadQuery($query_string, $keys, &$result, $use_default_ocires = FALSE)
 {
 	$dbc = OracleConnectSafe();
 

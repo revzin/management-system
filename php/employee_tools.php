@@ -89,7 +89,7 @@ function AMSEmployeeGetRole($id)
 {
 	$query = QueryStringReplace(QUERY_GET_USER_ROLE, 'id', $id);
 	$rows = array();
-	$numrows = OracleQuickQuery($query, 'emp_role', $rows);
+	$numrows = OracleQuickReadQuery($query, 'emp_role', $rows);
 	
 	if (0 == $numrows)
 		die('employee ' . $id . ' does not exist');
@@ -102,7 +102,7 @@ function AMSEmployeeSetupSession($id)
 {
 	$query = QueryStringReplace(QUERY_GET_EMPLOYEE_SESSIONDATA, 'emp_id', $id);
 	$rows = array();
-	$numrows = OracleQuickQuery($query, array('emp_role', 'emp_name', 'emp_surname'), $rows);
+	$numrows = OracleQuickReadQuery($query, array('emp_role', 'emp_name', 'emp_surname'), $rows);
 	if (0 == $numrows)
 		die('employee ' . $id . ' does not exist');
 		
@@ -128,7 +128,7 @@ function AMSEmployeeLogin($login, $password)
 {
 	$query = QueryStringReplace(QUERY_GET_USER_ID_PASSWORD, "emp_login", $login);
 	$rows = array();
-	$numrows = OracleQuickQuery($query, array("emp_password", "emp_id"), $rows);
+	$numrows = OracleQuickReadQuery($query, array("emp_password", "emp_id"), $rows);
 	
 	if (0 == $numrows)
 		return 'NO_SUCH_LOGIN';
