@@ -1,4 +1,4 @@
-﻿PROMPT Удаление таблицы employee
+PROMPT Удаление таблицы employee
 DROP TABLE employee;
 PROMPT Удаление типа jrnl_table
 DROP TYPE jrnl_table;

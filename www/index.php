@@ -16,10 +16,14 @@
 require_once("../php/common/ora_session.php");
 require_once("../php/common/ora_queries.php");
 require_once("../php/employee_tools.php");
+require_once("../php/employees_content.php");
 
 AMSEmployeeRedirectAuth();
 
-echo var_dump($_SESSION); 
+//echo var_dump($_SESSION); 
+
+AMSEchoEmployeeList();
+
 
 ?>
 

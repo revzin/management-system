@@ -22,16 +22,17 @@ define('QUERY_GET_ENCODING', 			"SELECT value
 											FROM nls_database_parameters 
 											WHERE parameter = 'NLS_CHARACTERSET'");
 										
-define('QUERY_SGMT_SORT_BY_ASC',		'SORT BY ^sort ASC');
-define('QUERY_SGMT_SORT_BY_DESC',		'SORY BY ^sort DESC');
-define('QUERY_SGMT_WHERE_VALUE',		'WHERE ^param = "^value"');
+define('QUERY_SGMT_ORDER_BY_ASC',		'ORDER BY ^sort ASC');
+define('QUERY_SGMT_ORDER_BY_DESC',		'ORDER BY ^sort DESC');
+define('QUERY_SGMT_WHERE_VALUE',		"WHERE ^param = '^value'");
+define('QUERY_SGMT_GROUP_BY',			'GROUP BY ^criteria');
 
 define('USE_STRING_CONVERSION', FALSE);
 
 function QueryStringReplace($query, $keys, $args)
 {
 	if (!is_array($keys) && !is_array($args)) {
-		return str_replace('^' . strval($keys), strval($args), $query);
+		$query = str_replace('^' . strval($keys), strval($args), $query);
 	} 
 	else {
 		if (count($keys) != count($args))
@@ -42,8 +43,12 @@ function QueryStringReplace($query, $keys, $args)
 			$query = str_replace('^' . strval($k), strval($args[$i]), $query);
 			$i += 1;
 		}
-		return $query;
 	}
+	
+	if (strpos($query, '^') !== FALSE)
+		die("QueryStringReplace: bad keys");
+		
+	return $query;
 }
 
 ?>

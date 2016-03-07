@@ -40,7 +40,8 @@ if (is_login_attempt()) {
 
 <html>
 	<header>
-	<title> Вход </title>
+		<meta charset="utf-8" /> 
+		<title> Вход </title>
 	</header>
 	<body>
 		<?php if ($flag_bad_login) echo "Данные неверны"; ?>

@@ -16,7 +16,6 @@ function db_tables_exist($db_table_names)
 	return TRUE;
 }
 
-
 function OracleTestDatabaseInstallation()
 {
 	$dbc = OracleConnect();

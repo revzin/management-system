@@ -34,13 +34,13 @@ define("AMS_BOMTYPE_WORKING",		1);
 define("AMS_BOMTYPE_FREEZE",		2);
 
 // Разрешения
-define("AMS_EMPPERM_VIEW_EMPLOYEES", 	1);
-define("AMS_EMPPERM_EDIT_EMPLOYEES",	2);
-define("AMS_EMPPERM_VIEW",				3);
-define("AMS_EMPPERM_VIEW_GROUP",		4);
-define("AMS_EMPPERM_HIREFIRE",			5);
-define("AMS_WRHSPERM_VIEW",				7);
-define("AMS_WRHSPERM_EDIT",				8);
+define("AMS_PERM_EMP_VIEW_EMPLOYEES", 	1);
+define("AMS_PERM_EMP_EDIT_EMPLOYEES",	2);
+define("AMS_PERM_EMP_VIEW",				3);
+define("AMS_PERM_EMP_VIEW_GROUP",		4);
+define("AMS_PERM_EMP_HIREFIRE",			5);
+define("AMS_PERM_WRHS_VIEW",			7);
+define("AMS_PERM_WRHS_EDIT",			8);
 
 define("AMS_ADMPERM_ADM",				9);
 

@@ -39,8 +39,8 @@ INSERT INTO employee
 VALUES
 (
 	3,
-	'Иван',
-	'Капышевский-Аэрпээмович',
+	'Чётылыбишься',
+	'Аэрпээмов',
 	'kp0603@kontora.ru',
 	'8060306030603',
 	30000,
@@ -152,6 +152,33 @@ VALUES
 	'ryba',
 	jrnl_table (
 		journal_t(CURRENT_TIMESTAMP, 0, 'Принят на работу')
+	)
+);
+
+INSERT INTO employee
+	(
+	emp_role, 
+	emp_name, 
+	emp_surname, 
+	emp_email, 
+	emp_phone, 
+	emp_salary, 
+	emp_login, 
+	emp_password, 
+	emp_journal)
+VALUES
+(
+	6,
+	'Предатель',
+	'Кидаловских',
+	'fraud@kontora.ru',
+	'88002000500',
+	3,
+	'fraudster',
+	'fired',
+	jrnl_table (
+		journal_t(CURRENT_TIMESTAMP, 0, 'Принят на работу'),
+		journal_t(CURRENT_TIMESTAMP, 0, 'Уволен к хренам')
 	)
 );
 

@@ -21,24 +21,24 @@ function AMSEmployeePermissionsByRole($role)
 		}
 		case AMS_ROLE_MGR: {
 			return array(
-						AMS_EMPPERM_VIEW_EMPLOYEES,
-						AMS_EMPPERM_EDIT_EMPLOYEES,
-						AMS_EMPPERM_HIREFIRE,
+						AMS_PERM_EMP_VIEW_EMPLOYEES,
+						AMS_PERM_EMP_EDIT_EMPLOYEES,
+						AMS_PERM_EMP_HIREFIRE,
 						
-						AMS_WRHSPERM_VIEW,
-						AMS_WRHSPERM_EDIT
+						AMS_PERM_WRHS_VIEW,
+						AMS_PERM_WRHS_EDIT
 						);
 		}
 		case AMS_ROLE_HR: {
 			return array(
-						AMS_EMPPERM_VIEW_EMPLOYEES,
-						AMS_EMPPERM_EDIT_EMPLOYEES
+						AMS_PERM_EMP_VIEW_EMPLOYEES,
+						AMS_PERM_EMP_EDIT_EMPLOYEES
 						);
 		}
 		case AMS_ROLE_ASMY_WRK: {
 			return array(
-						AMS_EMPPERM_VIEW_GROUP,
-						AMS_WRHSPERM_VIEW
+						AMS_PERM_EMP_VIEW_GROUP,
+						AMS_PERM_WRHS_VIEW
 						);
 		}
 		default:
@@ -74,9 +74,14 @@ function AMSEmployeeGetPermissions($id)
 	return AMSEmployeePermissionsByRole(AMSEmployeeGetRole($id));
 }
 
-function AMSEmployeeHasPermission($id, $permission)
+function AMSEmployeeHasPermission($permission, $id = 'CURRENT')
 {
-	$perms = AMSEmployeeGetPermissions($id);
+	if ($id == 'CURRENT') {
+		$perms = $_SESSION[SESSIONKEY_EMPLOYEE_PERMISSIONS];
+	} 
+	else {
+		$perms = AMSEmployeeGetPermissions($id);
+	}
 	foreach ($perms as $p) {
 		if ($p == $permission)
 			return TRUE;

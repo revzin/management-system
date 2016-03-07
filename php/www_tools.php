@@ -22,10 +22,9 @@ function ToolsEndSession()
 
 function ToolsDropAllBrowserCache()
 {
-header(	"Cache-Control: no-cache, no-store, must-revalidate
+	header("Cache-Control: no-cache, no-store, must-revalidate
 		Pragma: no-cache
-		Expires: 0"
-	);
+		Expires: 0");
 }
 
 ?>
