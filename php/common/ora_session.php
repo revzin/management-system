@@ -1,5 +1,6 @@
 <?php
 require_once("ora_user.php");
+require_once("ora_queries.php");
 
 function OracleConnect() 
 {
@@ -28,7 +29,9 @@ function OracleDisconnect($dbc)
 
 function OracleGetDBEncoding()
 {
-	$enc = OracleQuickQuery(QUERY_GET_ENCODING, "value", TRUE);
+	$rows = array();
+	OracleQuickQuery(QUERY_GET_ENCODING, "value", $rows, TRUE);
+	$enc = $rows[0];
 	if ($enc == 'CL8MSWIN1251')
 		return 'CP1251';
 }
@@ -44,25 +47,32 @@ function OracleInString($dbstring)
 }
 
 function OCIResultCustom($statement, $colname)
-{
+{	
 	$result = OCIResult($statement, strtoupper($colname));
 	
-	if (!isset($_SESSION['ORA_ENCODING'])) {
-		$_SESSION['ORA_ENCODING'] = OracleGetDBEncoding();
-	}
-	
-	if (is_string($result)) {
-		if ($_SESSION['ORA_ENCODING'] != 'UTF-8') {
+	if (USE_STRING_CONVERSION) {
+		$need_convert = FALSE;
+		if ($session_id == '') {	
+			$need_convert = (OracleGetDBEncoding() == 'UTF-8');
+		}
+		else {
+			if (!isset($_SESSION['ORA_ENCODING'])) {
+				$_SESSION['ORA_ENCODING'] = OracleGetDBEncoding();
+			} 	
+			$need_convert = ($_SESSION['ORA_ENCODING'] == 'UTF-8');
+		}
+		
+		if (is_string($result) and $need_convert) 
 			return OracleOutString($result);
-		} 
 		else
-			return $result;
-	}
+			return $result;	
+	} 
 	else
 		return $result;
 }
 
-function OracleQuickQuery($query_string, $keys, $use_default_ocires = FALSE)
+
+function OracleQuickQuery($query_string, $keys, &$result, $use_default_ocires = FALSE)
 {
 	$dbc = OracleConnectSafe();
 
@@ -82,7 +92,7 @@ function OracleQuickQuery($query_string, $keys, $use_default_ocires = FALSE)
 		die("Query execute failure: " . $query_string);
 	}
 	
-	$result = array();
+
 	$i = 0;
 	
 	if (is_array($keys)) {
@@ -97,16 +107,17 @@ function OracleQuickQuery($query_string, $keys, $use_default_ocires = FALSE)
 		}
 	}
 	else {		
-		OCIFetch($qr);
-		
-		if ($use_default_ocires)
-			$result = OCIResult($qr, strtoupper(strval($keys)));
-		else
-			$result = OCIResultCustom($qr, strtoupper($keys));
+		while (OCIFetch($qr)) {
+			if ($use_default_ocires)
+				$result[$i] = OCIResult($qr, strtoupper(strval($keys)));
+			else
+				$result[$i] = OCIResultCustom($qr, strtoupper($keys));
+			$i += 1;
+		}
 	}
 	
 	OracleDisconnect($dbc);
-	return $result;
+	return $i;
 }
 
 

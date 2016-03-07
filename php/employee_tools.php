@@ -5,10 +5,13 @@ require_once('common/ora_session.php');
 function permissions_by_role($role)
 {
 	switch ($role) {
+		case AMS_ROLE_FIRED: {
+			return array();
+		}
 		case AMS_ROLE_ADM: {
 			return array(
 						AMS_ADMPERM_ADM
-						)
+						);
 		}
 		case AMS_ROLE_MGR: {
 			return array(
@@ -29,28 +32,37 @@ function permissions_by_role($role)
 		case AMS_ROLE_ASMY_WRK: {
 			return array(
 						AMS_EMPPERM_VIEW_GROUP,
-						
 						AMS_WRHSPERM_VIEW
-						)
+						);
+		}
 		default:
 			return FALSE;
-		}
+		
 	}
 }
 
 
-
 function AMSEmployeeGetPermissions($id) 
 {
-	$role = OracleQuickQuery(QueryStringReplace(QUERY_GET_USER_ROLE, 'id', $id), 'emp_role');
-	$role = int($role);
-	return permission_by_role($role);
+	$query = QueryStringReplace(QUERY_GET_USER_ROLE, 'id', $id);
+	$rows = array();
+	$numrows = OracleQuickQuery($query, 'emp_role', $rows);
+	
+	if (0 == $numrows)
+		die('employee ' . $id . ' does not exist');
+	
+	$role = intval($rows[0]);
+	return permissions_by_role($role);
 }
 
 function AMSEmployeeHasPermission($id, $permission)
 {
-
-
+	$perms = AMSEmployeeGetPermissions($id);
+	foreach ($perms as $p) {
+		if ($p == $permission)
+			return TRUE;
+	}
+	return FALSE;
 }
 
 
