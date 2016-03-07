@@ -8,7 +8,7 @@ define("SESSIONKEY_EMPLOYEE_ROLE", "employee_role");
 define("SESSIONKEY_EMPLOYEE_NAME", "employee_name");
 define("SESSIONKEY_EMPLOYEE_PERMISSIONS", "employee_permissions");
 
-function AMSPermissionsByRole($role)
+function AMSEmployeePermissionsByRole($role)
 {
 	switch ($role) {
 		case AMS_ROLE_FIRED: {
@@ -71,7 +71,7 @@ function AMSEmployeeRoleToString($role)
 
 function AMSEmployeeGetPermissions($id) 
 {
-	return AMSPermissionsByRole(AMSEmployeeGetRole($id));
+	return AMSEmployeePermissionsByRole(AMSEmployeeGetRole($id));
 }
 
 function AMSEmployeeHasPermission($id, $permission)
@@ -108,7 +108,7 @@ function AMSEmployeeSetupSession($id)
 		
 	$empldata = $rows[0];
 	
-	$permissions = AMSPermissionsByRole($empldata["emp_role"]);
+	$permissions = AMSEmployeePermissionsByRole($empldata["emp_role"]);
 	$name = $empldata["emp_name"] . ' ' . $empldata["emp_surname"];
 	
 	session_start();
