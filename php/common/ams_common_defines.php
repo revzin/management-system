@@ -20,13 +20,14 @@ define("AMS_CTYPE_X", 				7);
 define("AMS_CTYPE_ETC",				8);
 
 // Роли сотрудников
-define("AMS_ROLE_MGR", 				0);
+define("AMS_ROLE_BOSS", 			0);
 define("AMS_ROLE_ASMY_WRK", 		1);
 define("AMS_ROLE_CTL", 				2);
-define("AMS_ROLE_HR",				3);
+define("AMS_ROLE_MGR",				3);
 define("AMS_ROLE_WM", 				4);
 define("AMS_ROLE_ADM", 				5);
 define("AMS_ROLE_FIRED",			6);
+define("AMS_ROLE_TOTAL_COUNT",		6);
 
 // Типы BOM
 define("AMS_BOMTYPE_TEMPLATE",		0);
@@ -39,6 +40,7 @@ define("AMS_PERM_EMP_EDIT_EMPLOYEES",	2);
 define("AMS_PERM_EMP_VIEW",				3);
 define("AMS_PERM_EMP_VIEW_GROUP",		4);
 define("AMS_PERM_EMP_HIREFIRE",			5);
+define("AMS_PERM_EMP_PROMOTE_TO_BOSS",	6);
 define("AMS_PERM_WRHS_VIEW",			7);
 define("AMS_PERM_WRHS_EDIT",			8);
 

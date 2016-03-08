@@ -16,7 +16,7 @@ function OracleConnectSafe()
 {
 	$dbc = OracleConnect();
 	if (!$dbc)
-		die("db failure");
+		die("db connect failure");
 	else
 		return $dbc;
 }
@@ -81,15 +81,18 @@ function OracleQuickReadQuery($query_string, $keys, &$result, $use_default_ocire
 	$e = OCIError($qr);
 	if ($e) {
 		echo var_dump($e);
+		echo var_dump(debug_backtrace());
 		die("Query parse failure: " . $query_string);
+
 	}
 	
 	OCIExecute($qr, OCI_DEFAULT);
 	
 	$e = OCIError($qr);
 	if ($e) { 
-		echo var_dump($e);
-		die("Query execute failure: " . $query_string);
+		echo var_dump($e) . '<br />' . '<br />';
+		echo var_dump(debug_backtrace()) . '<br />' . '<br />';
+		die("Query execute failure: " . $query_string) . '<br />';
 	}
 	
 
@@ -119,6 +122,7 @@ function OracleQuickReadQuery($query_string, $keys, &$result, $use_default_ocire
 	OracleDisconnect($dbc);
 	return $i;
 }
+
 
 
 $_in_arr = array (

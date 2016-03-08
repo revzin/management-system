@@ -47,7 +47,7 @@ PROMPT Удаление последовательности автоинкре�
 DROP SEQUENCE emp_id_incr;
 
 PROMPT Создание последовательности автоинкремента employee
-CREATE SEQUENCE emp_id_incr 
+CREATE SEQUENCE emp_id_incr -- запрещается emp_id = 0
 	START WITH 10 
 	INCREMENT BY 1;
 

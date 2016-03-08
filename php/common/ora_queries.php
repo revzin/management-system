@@ -3,12 +3,16 @@
 define('QUERY_ALL_USER_TABLE_NAMES', 	'SELECT table_name FROM user_tables');
 
 
-define('QUERY_GET_EMPLOYEES_OVERVIEW', 	'SELECT emp_role, emp_name, emp_surname, 
+define('QUERY_GET_EMPLOYEES_OVERVIEW', 	'SELECT emp_id, emp_role, emp_name, emp_surname, 
 											emp_email, emp_phone, emp_salary, emp_login 
 											FROM employee');
 											
 define('QUERY_GET_EMPLOYEE_SESSIONDATA','SELECT emp_role, emp_name, emp_surname 
 											FROM employee WHERE emp_id = ^emp_id');
+define('QUERY_GET_EMPLOYEE_EVERYTHING',	'SELECT emp_id, emp_role, emp_name, emp_surname,
+												emp_login, emp_phone, emp_email,
+												emp_salary, emp_login, emp_password
+												FROM employee WHERE emp_id = ^emp_id');
 											
 define('QUERY_GET_USER_ID_PASSWORD',	"SELECT emp_id, emp_password 
 											FROM employee 
@@ -21,11 +25,30 @@ define('QUERY_GET_USER_ROLE', 			'SELECT emp_role
 define('QUERY_GET_ENCODING', 			"SELECT value 
 											FROM nls_database_parameters 
 											WHERE parameter = 'NLS_CHARACTERSET'");
-										
+
+define('QUERY_READ_EMPLOYEE_JOURNAL', 	"SELECT ej.j_author_id, ej.j_text, ej.j_date
+										FROM employee e, TABLE(e.emp_journal) ej 
+										WHERE e.emp_id = ^emp_id ORDER BY ej.j_date DESC");
+									
+							
 define('QUERY_SGMT_ORDER_BY_ASC',		'ORDER BY ^sort ASC');
 define('QUERY_SGMT_ORDER_BY_DESC',		'ORDER BY ^sort DESC');
 define('QUERY_SGMT_WHERE_VALUE',		"WHERE ^param = '^value'");
 define('QUERY_SGMT_GROUP_BY',			'GROUP BY ^criteria');
+
+define('QUERY_SGMT_INSERT_INTO_EMPL',	'INSERT INTO employee
+											(
+												emp_role, 
+												emp_name, 
+												emp_surname, 
+												emp_email, 
+												emp_phone, 
+												emp_salary, 
+												emp_login, 
+												emp_password, 
+												emp_journal)
+											VALUES
+(');
 
 define('USE_STRING_CONVERSION', FALSE);
 
@@ -46,9 +69,14 @@ function QueryStringReplace($query, $keys, $args)
 	}
 	
 	if (strpos($query, '^') !== FALSE)
-		die("QueryStringReplace: bad keys");
+		die("QueryStringReplace: bad keys // " . debug_print_backtrace());
 		
 	return $query;
+}
+
+function OracleTrimTimestampToDate($timestamp)
+{
+	return substr($timestamp, 0, strlen('DD-MM-YY'));
 }
 
 ?>

@@ -19,17 +19,18 @@ function AMSEmployeePermissionsByRole($role)
 						AMS_ADMPERM_ADM
 						);
 		}
-		case AMS_ROLE_MGR: {
+		case AMS_ROLE_BOSS: {
 			return array(
 						AMS_PERM_EMP_VIEW_EMPLOYEES,
 						AMS_PERM_EMP_EDIT_EMPLOYEES,
 						AMS_PERM_EMP_HIREFIRE,
+						AMS_PERM_EMP_PROMOTE_TO_BOSS,
 						
 						AMS_PERM_WRHS_VIEW,
 						AMS_PERM_WRHS_EDIT
 						);
 		}
-		case AMS_ROLE_HR: {
+		case AMS_ROLE_MGR: {
 			return array(
 						AMS_PERM_EMP_VIEW_EMPLOYEES,
 						AMS_PERM_EMP_EDIT_EMPLOYEES
@@ -50,14 +51,14 @@ function AMSEmployeePermissionsByRole($role)
 function AMSEmployeeRoleToString($role) 
 {
 	switch ($role) {
-		case AMS_ROLE_MGR:
-			return 'менеджер';
+		case AMS_ROLE_BOSS:
+			return 'босс';
 		case AMS_ROLE_ASMY_WRK:
 			return 'монтажник';
 		case AMS_ROLE_CTL:
 			return 'контролёр';
-		case AMS_ROLE_HR:
-			return 'кадровик';
+		case AMS_ROLE_MGR:
+			return 'менеджер';
 		case AMS_ROLE_WM:
 			return 'складской специалист';
 		case AMS_ROLE_ADM:
@@ -67,7 +68,6 @@ function AMSEmployeeRoleToString($role)
 			return 'прошедший в жопу';
 	}
 }
-
 
 function AMSEmployeeGetPermissions($id) 
 {
@@ -97,7 +97,7 @@ function AMSEmployeeGetRole($id)
 	$numrows = OracleQuickReadQuery($query, 'emp_role', $rows);
 	
 	if (0 == $numrows)
-		die('employee ' . $id . ' does not exist');
+		return AMS_ROLE_FIRED;
 	
 	$role = intval($rows[0]);
 	return $role;
@@ -129,6 +129,19 @@ function AMSEmployeeDestroySession()
 	ToolsEndSession();
 }
 
+function AMSEmployeeID2Name($id)
+{
+	$query = QueryStringReplace(QUERY_GET_EMPLOYEE_SESSIONDATA, 'emp_id', $id);
+	$rows = array();
+	$numrows = OracleQuickReadQuery($query, array('emp_role', 'emp_name', 'emp_surname'), $rows);
+	if (0 == $numrows)
+		die('employee ' . $id . ' does not exist');
+		
+	$empldata = $rows[0];
+	
+	return $empldata["emp_name"] . ' ' . $empldata["emp_surname"];
+}
+
 function AMSEmployeeLogin($login, $password)
 {
 	$query = QueryStringReplace(QUERY_GET_USER_ID_PASSWORD, "emp_login", $login);
@@ -154,7 +167,7 @@ function AMSEmployeeRedirectAuth()
 	if (!isset($_SESSION[SESSIONKEY_EMPLOYEE_ID])) {
 		ToolsEndSession();
 		ToolsRedirectClient("auth.php");
-	}
+	}	
 }
 
 ?>

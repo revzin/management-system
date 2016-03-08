@@ -1,11 +1,29 @@
+* {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+}
+
 /* DEBUG */
 
 div {
     //border: 1px solid #000000;
 	padding: 10px;
 }
-
 /* END DEBUG */
+
+input[type="text"], input[type="password"], select {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	padding: 3px;
+	border: solid 1px #dcdcdc;
+	transition: box-shadow 0.3s, border 0.3s;
+	width: 100%;
+}
+ 
+ input[type="text"]:focus,
+ input[type="text"].focus {
+	border: solid 1px #707070;
+	box-shadow: 0 0 5px 1px #969696;
+}
 
 #container {
 	float: center;
@@ -104,3 +122,44 @@ h1
 	width: 95%;
 }
 
+.table-header
+{
+	font-weight: bold;
+}
+
+p {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 14pt;
+}
+
+.employees {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.employees td, .employees th {
+    border: 1px solid #ddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.employees tr:nth-child(even){background-color: #f2f2f2}
+
+.employees tr:hover {background-color: #ddd;}
+
+.employee-editor {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    //width: 100%;
+}
+
+.employee-editor td, .employee-editor th {
+    border: 1px solid #ddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.employee-editor tr:nth-child(even){background-color: #f2f2f2}
+
+.employee-editor tr:hover {background-color: #ddd;}

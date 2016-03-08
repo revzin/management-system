@@ -21,7 +21,7 @@ VALUES
 	'siemens',
 	'manager',
 	jrnl_table (
-		journal_t(CURRENT_TIMESTAMP, 0, 'Основал компанию')
+		journal_t(CURRENT_TIMESTAMP, 10, 'Основал компанию')
 	)
 );
 
@@ -47,7 +47,7 @@ VALUES
 	'kp0603',
 	'arpm',
 	jrnl_table (
-		journal_t(CURRENT_TIMESTAMP, 0, 'Принят на работу')
+		journal_t(CURRENT_TIMESTAMP, 10, 'Принят на работу')
 	)
 );
 	
@@ -73,7 +73,7 @@ VALUES
 	'shukine',
 	'ryba',
 	jrnl_table (
-		journal_t(CURRENT_TIMESTAMP, 0, 'Принят на работу')
+		journal_t(CURRENT_TIMESTAMP, 10, 'Принят на работу')
 	)
 );
 	
@@ -99,7 +99,7 @@ VALUES
 	'reglament666',
 	'iu4',
 	jrnl_table (
-		journal_t(CURRENT_TIMESTAMP, 0, 'Принят на работу')
+		journal_t(CURRENT_TIMESTAMP, 10, 'Принят на работу')
 	)
 );
 
@@ -125,7 +125,7 @@ VALUES
 	'vicenty',
 	'iu4',
 	jrnl_table (
-		journal_t(CURRENT_TIMESTAMP, 0, 'Принят на работу')
+		journal_t(CURRENT_TIMESTAMP, 10, 'Принят на работу')
 	)
 );
 
@@ -151,7 +151,7 @@ VALUES
 	'skumbria',
 	'ryba',
 	jrnl_table (
-		journal_t(CURRENT_TIMESTAMP, 0, 'Принят на работу')
+		journal_t(CURRENT_TIMESTAMP, 10, 'Принят на работу')
 	)
 );
 
@@ -177,8 +177,35 @@ VALUES
 	'fraudster',
 	'fired',
 	jrnl_table (
-		journal_t(CURRENT_TIMESTAMP, 0, 'Принят на работу'),
-		journal_t(CURRENT_TIMESTAMP, 0, 'Уволен к хренам')
+		journal_t(CURRENT_TIMESTAMP, 10, 'Принят на работу'),
+		journal_t(CURRENT_TIMESTAMP, 10, 'Уволен к хренам')
+	)
+);
+
+INSERT INTO employee
+	(
+	emp_role, 
+	emp_name, 
+	emp_surname, 
+	emp_email, 
+	emp_phone, 
+	emp_salary, 
+	emp_login, 
+	emp_password, 
+	emp_journal)
+VALUES
+(
+	4,
+	'Никита',
+	'Окнесинед',
+	'not_denisenko@kontora.ru',
+	'88002000500',
+	3,
+	'not_denisenko',
+	'plastic',
+	jrnl_table (
+		journal_t(CURRENT_TIMESTAMP, 10, 'Принят на работу'),
+		journal_t(CURRENT_TIMESTAMP, 10, 'Потратил весь пластик России')
 	)
 );
 

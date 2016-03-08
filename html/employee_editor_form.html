@@ -1,0 +1,103 @@
+<h3> Сотрудник %%NAME%% %%SURNAME%%: Редактирование </h3>
+<form action = 'employee.php' method = 'POST'>
+	<table class = 'employee-editor'>
+		<tbody>
+			<tr class = 'table-header'>
+				<td>
+					Данные
+				</td>
+				<td>
+					<input type = submit value = 'Записать'/>
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					Идентификатор:
+				</td>
+				<td>
+					%%ID%%
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Имя: 
+				</td>
+				<td>
+					<input type = text name = 'emp_name' value = '%%NAME%%'/>
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					Фамилия:
+				</td>
+				<td>
+					<input type = text name = 'emp_surname' value = '%%SURNAME%%'/> 
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					Логин:
+				</td>
+				<td>
+					<input type = text name = 'emp_surname' value = '%%LOGIN%%'/> 
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					Пароль:
+				</td>
+				<td>
+					<input type = password name = 'emp_password' value = '%%PASSWORD%%'/> 
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					Повтор пароля:
+				</td>
+				<td>
+					<input type = password name = 'emp_password_repeat' value = '%%PASSWORD%%'/> 
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					Телефон: 
+				</td>
+				<td>
+					<input type = text name = 'emp_phone' value = '%%PHONE%%'/> <br />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Электропочта: 
+				</td>
+				<td>
+					<input type = text name = 'emp_email' value = '%%EMAIL%%'/> <br />
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					Зарплата:
+				</td>
+				<td>
+					<input type = text name = 'emp_salary' value = '%%SALARY%%'/> <br />
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					Роль: 
+				</td>
+				<td>
+					%%ROLE_SELECT%%
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</form>	
