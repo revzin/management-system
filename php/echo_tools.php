@@ -9,6 +9,7 @@ define('MSG_INSUFFICIENT_PERMISSIONS_HIREFIRE', "У вас нет прав дл�
 define('MSG_NO_DATA_TO_SHOW', 'Нет данных для отображения.');
 define('MSG_FAILED_EMPLOYEE_CREATION', 'Не удалось создать пользователя.');
 define('MSG_UNMATCHING_PASSWORDS', 'Пароли не совпдают.');
+define('MSG_SALARY_HIDDEN', 'Зарплата скрыта из вежливости');
 
 function ToolsEchoColumn($row, $column_name, $link = FALSE, $timestamp_to_date = FALSE)
 {

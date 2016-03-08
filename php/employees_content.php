@@ -180,7 +180,12 @@ function AMSEchoEmployeeDetail($id)
 	$html = str_replace('%%NAME%%', $emp_data["emp_name"], $html);
 	$html = str_replace("%%SURNAME%%", $emp_data["emp_surname"], $html);
 	$html = str_replace("%%PHONE%%", $emp_data["emp_phone"], $html);
-	$html = str_replace("%%SALARY%%", $emp_data["emp_salary"], $html);
+	if ($can_edit OR ($id == $_SESSION[SESSIONKEY_EMPLOYEE_ID])) {
+		$html = str_replace("%%SALARY%%", $emp_data["emp_salary"], $html);
+	} 
+	else {
+		$html = str_replace("%%SALARY%%", MSG_SALARY_HIDDEN, $html);
+	}
 	$html = str_replace("%%EMAIL%%", $emp_data["emp_email"], $html);
 	$html = str_replace("%%LOGIN%%", $emp_data["emp_login"], $html);
 	$html = str_replace("%%PASSWORD%%", $emp_data["emp_password"], $html);
