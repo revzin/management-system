@@ -17,14 +17,19 @@ function append_role_option($role_id, $str, $employee_role)
 
 function make_role_dropdown($can_fire, $employee_role) 
 {
+	if ($employee_role == AMS_ROLE_FIRED and !AMSEmployeeHasPermission(AMS_PERM_EMP_HIREFIRE)) {
+		return AMSEmployeeRoleToString($employee_role);
+	}
+	
 	$str = '<select name = "role_selector">';
-		
+			
 	if (AMSEmployeeHasPermission(AMS_PERM_EMP_PROMOTE_TO_BOSS)) 
 		$str = append_role_option(AMS_ROLE_BOSS, $str, $employee_role); 
 	
 	$str = append_role_option(AMS_ROLE_ASMY_WRK, $str, $employee_role);
 	$str = append_role_option(AMS_ROLE_MGR, $str, $employee_role);
 	$str = append_role_option(AMS_ROLE_ADM, $str, $employee_role);
+	$str = append_role_option(AMS_ROLE_WM, $str, $employee_role);
 	
 	if (AMSEmployeeHasPermission(AMS_PERM_EMP_HIREFIRE))
 		$str = append_role_option(AMS_ROLE_FIRED, $str, $employee_role);
