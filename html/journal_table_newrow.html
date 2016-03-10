@@ -1,16 +1,14 @@
-<form name = 'journal_row' method = 'POST' action = 'employee.php'>
-	<tr> 
-		<td>
-			<input type = submit value = 'Создать'>
-		</td> 
-		<td>
-			%%CURRENT_DATE%%
-		</td>
-		<td>
-			<input type = text value = 'Текст новой записи...' />
-		</td>
-		<td>
-			%%CURRENT_USER_NAME%%
-		</td>
-	</tr>
-</form>
+<tr> 
+	<td>
+		<input type = submit value = 'Создать'>
+	</td> 
+	<td>
+		%%CURRENT_DATE%%
+	</td>
+	<td>
+		<input type = text name = 'journal_text' placeholder = 'Текст новой записи...' />
+	</td>
+	<td>
+		%%CURRENT_USER_NAME%%
+	</td>
+</tr>

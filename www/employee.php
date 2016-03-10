@@ -1,10 +1,5 @@
 <?php
 
-function EmployeeHandlePOST()
-{
-
-}
-
 ?>
 
 <?php 
@@ -22,7 +17,7 @@ AMSEmployeeRedirectAuth();
 <body>
 
 <?php
-
+EmployeeHandlePOST();
 
 AMSEchoCurrentUserData();
 

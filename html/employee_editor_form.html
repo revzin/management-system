@@ -1,5 +1,8 @@
-<h3> Сотрудник %%NAME%% %%SURNAME%%: Редактирование </h3>
+<h3> %%NAME%% %%SURNAME%%: Редактирование </h3>
 <form action = 'employee.php' method = 'POST'>
+	<!-- для отличения обновления сотрудника от создания нового -->
+	<input type = "hidden" name = "emp_id" value = "%%EMPLOYEEID%%" />
+	<input type = "hidden" name = "employee_editor_form" value = "TRUE" />
 	<table class = 'employee-editor'>
 		<tbody>
 			<tr class = 'table-header'>
@@ -7,7 +10,7 @@
 					Данные
 				</td>
 				<td>
-					<input type = submit value = 'Записать'/>
+					<input type = submit value = 'Записать' />
 				</td>
 			</tr>
 
@@ -19,12 +22,13 @@
 					%%ID%%
 				</td>
 			</tr>
+
 			<tr>
 				<td>
 					Имя: 
 				</td>
 				<td>
-					<input type = text name = 'emp_name' value = '%%NAME%%'/>
+					<input type = text name = 'emp_name' value = '%%NAME%%' />
 				</td>
 			</tr>
 			
@@ -42,7 +46,7 @@
 					Логин:
 				</td>
 				<td>
-					<input type = text name = 'emp_surname' value = '%%LOGIN%%'/> 
+					<input type = text name = 'emp_login' value = '%%LOGIN%%'/> 
 				</td>
 			</tr>
 			
@@ -100,4 +104,4 @@
 			</tr>
 		</tbody>
 	</table>
-</form>	
+</form>

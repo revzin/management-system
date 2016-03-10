@@ -41,9 +41,9 @@ define("AMS_PERM_EMP_VIEW",				3);
 define("AMS_PERM_EMP_VIEW_GROUP",		4);
 define("AMS_PERM_EMP_HIREFIRE",			5);
 define("AMS_PERM_EMP_PROMOTE_TO_BOSS",	6);
-define("AMS_PERM_WRHS_VIEW",			7);
-define("AMS_PERM_WRHS_EDIT",			8);
-
-define("AMS_ADMPERM_ADM",				9);
+define("AMS_PERM_EMP_CAN_EDIT_BOSSES",	7);
+define("AMS_PERM_WRHS_VIEW",			8);
+define("AMS_PERM_WRHS_EDIT",			9);
+define("AMS_ADMPERM_ADM",				10);
 
 ?>

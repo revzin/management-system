@@ -21,7 +21,7 @@ function make_role_dropdown($can_fire, $employee_role)
 		return AMSEmployeeRoleToString($employee_role);
 	}
 	
-	$str = '<select name = "role_selector">';
+	$str = '<select name = "emp_role">';
 			
 	if (AMSEmployeeHasPermission(AMS_PERM_EMP_PROMOTE_TO_BOSS)) 
 		$str = append_role_option(AMS_ROLE_BOSS, $str, $employee_role); 
@@ -35,7 +35,7 @@ function make_role_dropdown($can_fire, $employee_role)
 		$str = append_role_option(AMS_ROLE_FIRED, $str, $employee_role);
 	
 	
-	$str .= '</select>';	
+	$str .= '</select>';
 	return $str;
 }
 
@@ -104,11 +104,12 @@ function AMSEchoEmployeeDetail($id)
 	
 	$his_role = 0;
 	$my_role = $_SESSION[SESSIONKEY_EMPLOYEE_ROLE];
-	
+
 	if ($id == 'NEW') {
-		if (!AMSEmployeeHasPermission(AMS_PERM_EMP_HIREFIRE)) 
+		if (!AMSEmployeeHasPermission(AMS_PERM_EMP_HIREFIRE)) {
 			echo MSG_INSUFFICIENT_PERMISSIONS_HIREFIRE;
-			
+			return;
+		}
 		$can_edit = TRUE;	
 	}
 	else {
@@ -145,8 +146,8 @@ function AMSEchoEmployeeDetail($id)
 
 	if ($id == 'NEW') {
 		$emp_data["emp_id"] = 'будет установлен после создания';
-		$emp_data["emp_name"] = '';
-		$emp_data["emp_surname"] = '';
+		$emp_data["emp_name"] = 'Новый';
+		$emp_data["emp_surname"] = 'Сотрудник';
 		$emp_data["emp_phone"] = '';
 		$emp_data["emp_salary"] = '';
 		$emp_data["emp_email"] = '';
@@ -180,12 +181,14 @@ function AMSEchoEmployeeDetail($id)
 	$html = str_replace('%%NAME%%', $emp_data["emp_name"], $html);
 	$html = str_replace("%%SURNAME%%", $emp_data["emp_surname"], $html);
 	$html = str_replace("%%PHONE%%", $emp_data["emp_phone"], $html);
+	
 	if ($can_edit OR ($id == $_SESSION[SESSIONKEY_EMPLOYEE_ID])) {
 		$html = str_replace("%%SALARY%%", $emp_data["emp_salary"], $html);
 	} 
 	else {
 		$html = str_replace("%%SALARY%%", MSG_SALARY_HIDDEN, $html);
 	}
+	
 	$html = str_replace("%%EMAIL%%", $emp_data["emp_email"], $html);
 	$html = str_replace("%%LOGIN%%", $emp_data["emp_login"], $html);
 	$html = str_replace("%%PASSWORD%%", $emp_data["emp_password"], $html);
@@ -199,6 +202,13 @@ function AMSEchoEmployeeDetail($id)
 		$html = str_replace("%%ROLE_SELECT%%", 
 							AMSEmployeeRoleToString($emp_data["emp_role"]), 
 							$html);
+	}
+	
+	if ($id == 'NEW') {
+		$html = str_replace("%%EMPLOYEEID%%", 'NEW', $html);
+	}
+	else {
+		$html = str_replace("%%EMPLOYEEID%%", $id, $html);
 	}
 		
 	echo $html;
@@ -224,8 +234,10 @@ function AMSEchoEmployeeDetail($id)
 
 	echo "<h3>" . 'Сотрудник ' . AMSEmployeeID2Name($id) . ': Журнал записей в личное дело  </h3>';
 		
-	echo "<table class = 'employees'> <tbody>";
-	
+	echo "<form name = 'journal_new_row' method = 'POST' action = 'employee.php'>";
+	echo "<input type = hidden name = 'target_employee_id' value = '". $id ."' />";
+	echo "<input type = hidden name = 'journal_edtior_form' value = 'TRUE' />";
+	echo "<table class = 'employees'> <tbody>";	
 	$header = file_get_contents("../html/journal_table_header.html");
 	echo $header;
 	
@@ -243,7 +255,7 @@ function AMSEchoEmployeeDetail($id)
 	}
 	
 	echo "</tbody> </table>";
-	
+	echo "</form>";
 }
 
 function AMSEchoEmployeeList()
@@ -334,7 +346,7 @@ function emp_echo_column_role($row, $role_column_name)
 }
 
 function emp_echo_row($row_array, $row_number)
-{	
+{
 	$row = $row_array[$row_number];
 	$detail_link_ref = 'employee.php?mode=detail&employee_id=' . $row['emp_id'];
 	echo '<tr>';
@@ -385,22 +397,121 @@ function validate_role($role)
 	return TRUE;
 }
 
-function AMSHandlePOST()
+function handle_post_employee_editor()
 {
+	$emp_id = $_POST['emp_id'];
+	$emp_name = $_POST['emp_name'];
+	$emp_surname = $_POST['emp_surname'];
+	$emp_login = $_POST['emp_login'];
+	$emp_email = $_POST['emp_email'];
+	$emp_phone = $_POST['emp_phone'];
+	$emp_password = $_POST['emp_password'];
+	$emp_salary = $_POST['emp_salary'];
+	$emp_role	= $_POST['emp_role'];
+	$emp_name = $_POST['emp_name'];
+	
+	if ($emp_id == 'NEW') {
+		if (!AMSEmployeeHasPermission(AMS_PERM_EMP_VIEW_EMPLOYEES)) {
+			echo MSG_INSUFFICIENT_PERMISSIONS_HIREFIRE;
+			return;
+		}	
+		
+		$query = QueryStringReplace(QUERY_INSERT_NEW_EMPLOYEE,
+									array('emp_name', 'emp_surname', 'emp_email', 
+											'emp_login', 'emp_password', 'emp_role', 'emp_salary', 'emp_phone'),
+									array($emp_name, $emp_surname, $emp_email, $emp_login, 
+											$emp_password, $emp_role, $emp_salary, $emp_phone));
+									
+		$r = OracleQuickWriteQuery($query);
+
+		if ('SUCCESS' != $r) {
+			if ($r == ORAERR_UNIQUE_FAILED) {
+				echo MSG_LOGIN_TAKEN . ' ' . $emp_login;
+			}
+			else 
+				echo MSG_BAD_POST;
+			return;
+		}
+				
+		$rows = array();
+		$numrows = OracleQuickReadQuery(
+					QueryStringReplace(QUERY_LOGIN_TO_ID, 'emp_login', $emp_login), "emp_id", $rows);
+					
+		if (!$numrows) 
+			die('bad internal error');
+		
+		$modified_employee_id = $rows[0];
+		
+		AMSEmployeeAddRowToJournal($modified_employee_id, MSG_JOURNAL_HIRED);
+	} 
+	else {
+		$old_role = AMSEmployeeGetRole($emp_id);
+		
+		$query = QueryStringReplace(QUERY_UPDATE_EMPLOYEE,
+							array('emp_name', 'emp_surname', 'emp_email', 
+									'emp_login', 'emp_password', 'emp_role', 'emp_salary', 'emp_phone', 'emp_id'),
+							array($emp_name, $emp_surname, $emp_email, $emp_login, $emp_password, 
+									$emp_role, $emp_salary, $emp_phone, $emp_id));
+							
+		$r = OracleQuickWriteQuery($query);
+
+		if ('SUCCESS' != $r) {
+			if ($r == ORAERR_UNIQUE_FAILED) {
+				echo MSG_LOGIN_TAKEN . ' ' . $emp_login;
+			}
+			else 
+				echo MSG_BAD_POST;
+			return;
+		}
+		
+		$new_role = $emp_role;
+		if ($old_role == AMS_ROLE_FIRED and $new_role != AMS_ROLE_FIRED) {
+			AMSEmployeeAddRowToJournal($emp_id, MSG_JOURNAL_REHIRED);
+		}
+		else if ($old_role != AMS_ROLE_FIRED and $new_role == AMS_ROLE_FIRED) {
+			AMSEmployeeAddRowToJournal($emp_id, MSG_JOURNAL_FIRED);
+		}
+		else
+			AMSEmployeeAddRowToJournal($emp_id, MSG_JOURNAL_DATA_CHANGE);
+	}
+}
+
+
+function handle_post_employee_journal()
+{
+	$text = $_POST['journal_text'];
+	$id = $_POST['target_employee_id'];
+	if ($text != '') {
+		AMSEmployeeAddRowToJournal($id, $text);
+		echo 'Запись в журнал добавлена';
+	}
+	AMSEchoEmployeeDetail($id);
+}
+
+
+function EmployeeHandlePOST()
+{
+
 	if (!isset($_POST))
 		return;
 	
-	$emp_name = $_POST["emp_name"];
-	$emp_surname = $_POST["emp_surname"];
-	$emp_pwd = $_POST["emp_password"];
-	$emp_email = $_POST["emp_email"];
-	$emp_phone = $_POST["emp_phone"];
-	$emp_salary = $_POST["emp_salary"];
-	$emp_role = $_POST["emp_role"];
-	
-	
-	
+	if (isset($_POST["employee_editor_form"])) {
+		handle_post_employee_editor();
+		return;
+	}
+		
+	if (isset($_POST["journal_edtior_form"])) {
+		handle_post_employee_journal();
+		return;
+	}	
+}
+
+
+
+function EmployeeHandleGET()
+{
+
+
 }
 
 ?>
-

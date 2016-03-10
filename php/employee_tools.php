@@ -25,6 +25,7 @@ function AMSEmployeePermissionsByRole($role)
 						AMS_PERM_EMP_EDIT_EMPLOYEES,
 						AMS_PERM_EMP_HIREFIRE,
 						AMS_PERM_EMP_PROMOTE_TO_BOSS,
+						AMS_PERM_EMP_CAN_EDIT_BOSSES,
 						
 						AMS_PERM_WRHS_VIEW,
 						AMS_PERM_WRHS_EDIT
@@ -83,8 +84,9 @@ function AMSEmployeeHasPermission($permission, $id = 'CURRENT')
 		$perms = AMSEmployeeGetPermissions($id);
 	}
 	foreach ($perms as $p) {
-		if ($p == $permission)
+		if ($p == $permission) {
 			return TRUE;
+		}
 	}
 	return FALSE;
 }
@@ -170,4 +172,43 @@ function AMSEmployeeRedirectAuth()
 	}	
 }
 
+function AMSEmployeeJournalAccessible($my_role, $his_role, $my_id, $his_id)
+{
+	$my_role = intval($my_role);
+	$his_role = intval($his_role);
+	$my_id = intval($my_id);
+	$his_id = intval($his_id);
+	
+	if (AMSEmployeeHasPermission(AMS_PERM_EMP_VIEW_EMPLOYEES)) {
+		if (($his_role == AMS_ROLE_BOSS) and !AMSEmployeeHasPermission(AMS_PERM_EMP_CAN_EDIT_BOSSES))
+			return FALSE;
+		return TRUE;
+	}
+	
+	if ($my_id == $his_id)
+		return TRUE;
+	
+	return FALSE;
+}
+
+function AMSEmployeeAddRowToJournal($id, $text)
+{
+	$my_role = $_SESSION[SESSIONKEY_EMPLOYEE_ROLE];
+	$my_id	= $_SESSION[SESSIONKEY_EMPLOYEE_ID];
+	
+	$his_id = $id;
+	$his_role = AMSEmployeeGetRole($id);
+	
+	if (!AMSEmployeeJournalAccessible($my_role, $his_role, $my_id, $his_id))
+		die("AMSEmployeeAddRowToJounral: permsission denied");
+	
+	$query = QueryStringReplace(QUERY_INSERT_INTO_EMP_JOURNAL, 
+								array("emp_id", "author_id", "journal_emp_text"),
+								array($his_id, $my_id, $text));
+					
+	$r = OracleQuickWriteQuery($query);				
+	if ('SUCCESS' != $r) {
+		die('AMSEmployeeAddRowToJounral: ORA-' . $r);
+	}
+}	
 ?>

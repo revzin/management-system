@@ -2,6 +2,8 @@
 require_once("ora_user.php");
 require_once("ora_queries.php");
 
+define('ORAERR_UNIQUE_FAILED', 1);
+
 function OracleConnect() 
 {
 	$dbc = OCILogon(ORACLE_USER, ORACLE_PASSWORD, ORACLE_SERVICE);
@@ -71,6 +73,29 @@ function OCIResultCustom($statement, $colname)
 		return $result;
 }
 
+function OracleQuickWriteQuery($query_string)
+{
+	$dbc = OracleConnectSafe();
+
+	$qr = OCIParse($dbc, $query_string);
+	$e = OCIError($qr);
+	
+	if ($e) {
+		OracleDisconnect($dbc);
+		return $e['code'];
+	}
+	
+	OCIExecute($qr);
+	$e = OCIError($qr);
+	
+	if ($e) {
+		OracleDisconnect($dbc);
+		return $e['code'];
+	}
+	
+	OracleDisconnect($dbc);
+	return 'SUCCESS';
+}
 
 function OracleQuickReadQuery($query_string, $keys, &$result, $use_default_ocires = FALSE)
 {

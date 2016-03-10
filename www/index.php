@@ -18,7 +18,7 @@ require_once("../php/common/ora_queries.php");
 require_once("../php/employee_tools.php");
 require_once("../php/employees_content.php");
 
-AMSEmployeeRedirectAuth();
+ToolsRedirectClient("employee.php");
 
 
 ?>

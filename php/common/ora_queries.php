@@ -28,32 +28,48 @@ define('QUERY_GET_ENCODING', 			"SELECT value
 
 define('QUERY_READ_EMPLOYEE_JOURNAL', 	"SELECT ej.j_author_id, ej.j_text, ej.j_date
 										FROM employee e, TABLE(e.emp_journal) ej 
-										WHERE e.emp_id = ^emp_id ORDER BY ej.j_date DESC");
-									
+										WHERE e.emp_id = ^emp_id ORDER BY ej.j_date ASC");
+
+define('QUERY_INSERT_NEW_EMPLOYEE',		"INSERT INTO employee 
+											(emp_name, emp_surname, emp_email, emp_login, emp_password,
+											emp_role, emp_salary, emp_phone, emp_journal)
+											 VALUES
+											 ('^emp_name', '^emp_surname', '^emp_email', '^emp_login', '^emp_password',
+											 ^emp_role, ^emp_salary, ^emp_phone, jrnl_table())");
+											 
+
+define('QUERY_UPDATE_EMPLOYEE',			"UPDATE employee
+										SET emp_name = '^emp_name',
+											emp_surname = '^emp_surname',
+											emp_email = '^emp_email',
+											emp_login = '^emp_login',
+											emp_password = '^emp_password',
+											emp_role	 = ^emp_role,
+											emp_salary = ^emp_salary,
+											emp_phone = ^emp_phone
+										WHERE emp_id = ^emp_id");
+
+define('QUERY_LOGIN_TO_ID',				"SELECT emp_id FROM employee WHERE emp_login = '^emp_login'");
+										
+define('QUERY_INSERT_INTO_EMP_JOURNAL',	"INSERT
+											INTO TABLE(
+												SELECT emp_journal
+												FROM employee
+												WHERE emp_id = ^emp_id
+											)
+											VALUES(
+												journal_t(CURRENT_TIMESTAMP, ^author_id, '^journal_emp_text')
+											)");
 							
 define('QUERY_SGMT_ORDER_BY_ASC',		'ORDER BY ^sort ASC');
 define('QUERY_SGMT_ORDER_BY_DESC',		'ORDER BY ^sort DESC');
 define('QUERY_SGMT_WHERE_VALUE',		"WHERE ^param = '^value'");
 define('QUERY_SGMT_GROUP_BY',			'GROUP BY ^criteria');
 
-define('QUERY_SGMT_INSERT_INTO_EMPL',	'INSERT INTO employee
-											(
-												emp_role, 
-												emp_name, 
-												emp_surname, 
-												emp_email, 
-												emp_phone, 
-												emp_salary, 
-												emp_login, 
-												emp_password, 
-												emp_journal)
-											VALUES
-(');
-
 define('USE_STRING_CONVERSION', FALSE);
 
 function QueryStringReplace($query, $keys, $args)
-{
+{	
 	if (!is_array($keys) && !is_array($args)) {
 		$query = str_replace('^' . strval($keys), strval($args), $query);
 	} 
