@@ -473,6 +473,9 @@ function handle_post_employee_editor()
 		}
 		else
 			AMSEmployeeAddRowToJournal($emp_id, MSG_JOURNAL_DATA_CHANGE);
+			
+		if ($emp_id == $_SESSION[SESSIONKEY_EMPLOYEE_ID])
+			AMSEmployeeSetupSession($emp_id);
 	}
 }
 
