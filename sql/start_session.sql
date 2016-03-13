@@ -1,1 +1,1 @@
-CONN scott/tiger
+CONN revzin/revzin
