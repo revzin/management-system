@@ -232,7 +232,7 @@ function AMSEchoEmployeeDetail($id)
 	if (0 == $numrows)
 		die('NO JOURNAL FOR EMPLOYEE'); // нет записей в журнале, хотя это не должно быть
 
-	echo "<h3>" . 'Сотрудник ' . AMSEmployeeID2Name($id) . ': Журнал записей в личное дело  </h3>';
+	echo "<h3>" . AMSEmployeeID2Name($id) . ': Журнал записей в личное дело  </h3>';
 		
 	echo "<form name = 'journal_new_row' method = 'POST' action = 'employee.php'>";
 	echo "<input type = hidden name = 'target_employee_id' value = '". $id ."' />";

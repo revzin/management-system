@@ -35,7 +35,7 @@ define('QUERY_INSERT_NEW_EMPLOYEE',		"INSERT INTO employee
 											emp_role, emp_salary, emp_phone, emp_journal)
 											 VALUES
 											 ('^emp_name', '^emp_surname', '^emp_email', '^emp_login', '^emp_password',
-											 ^emp_role, ^emp_salary, ^emp_phone, jrnl_table())");
+											 ^emp_role, ^emp_salary, ^emp_phone, t_jrnl_table())");
 											 
 
 define('QUERY_UPDATE_EMPLOYEE',			"UPDATE employee
@@ -58,7 +58,7 @@ define('QUERY_INSERT_INTO_EMP_JOURNAL',	"INSERT
 												WHERE emp_id = ^emp_id
 											)
 											VALUES(
-												journal_t(CURRENT_TIMESTAMP, ^author_id, '^journal_emp_text')
+												t_journal(CURRENT_TIMESTAMP, ^author_id, '^journal_emp_text')
 											)");
 
 define('QUERY_COUNT_ROLE',				"SELECT COUNT(emp_id) 
