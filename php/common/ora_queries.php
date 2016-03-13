@@ -60,7 +60,12 @@ define('QUERY_INSERT_INTO_EMP_JOURNAL',	"INSERT
 											VALUES(
 												journal_t(CURRENT_TIMESTAMP, ^author_id, '^journal_emp_text')
 											)");
-							
+
+define('QUERY_COUNT_ROLE',				"SELECT COUNT(emp_id) 
+											AS count 
+											FROM employee 
+											WHERE emp_role = ^emp_role");
+											
 define('QUERY_SGMT_ORDER_BY_ASC',		'ORDER BY ^sort ASC');
 define('QUERY_SGMT_ORDER_BY_DESC',		'ORDER BY ^sort DESC');
 define('QUERY_SGMT_WHERE_VALUE',		"WHERE ^param = '^value'");

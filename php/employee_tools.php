@@ -210,5 +210,14 @@ function AMSEmployeeAddRowToJournal($id, $text)
 	if ('SUCCESS' != $r) {
 		die('AMSEmployeeAddRowToJounral: ORA-' . $r);
 	}
-}	
+}
+
+function AMSEmployeeCountRole($role)
+{
+	$query = QueryStringReplace(QUERY_COUNT_ROLE, "emp_role", $role);
+	$rows = array();
+	$numrows = OracleQuickReadQuery($query, "count", $rows);
+	return intval($rows[0]);
+}
+	
 ?>

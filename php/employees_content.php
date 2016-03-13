@@ -447,6 +447,13 @@ function handle_post_employee_editor()
 	else {
 		$old_role = AMSEmployeeGetRole($emp_id);
 		
+		if (($old_role != $emp_role) and ($old_role == AMS_ROLE_BOSS)) {
+			if (1 == AMSEmployeeCountRole(AMS_ROLE_BOSS)) {
+				echo MSG_CANT_DEMOTE_LAST_BOSS;
+				$emp_role = $old_role;
+			}
+		}
+		
 		$query = QueryStringReplace(QUERY_UPDATE_EMPLOYEE,
 							array('emp_name', 'emp_surname', 'emp_email', 
 									'emp_login', 'emp_password', 'emp_role', 'emp_salary', 'emp_phone', 'emp_id'),
