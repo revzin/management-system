@@ -9,6 +9,9 @@ PROMPT Создание внутренних ограничений таблиц
 ALTER TABLE unit
 	ADD CONSTRAINT i_pk_unit PRIMARY KEY (u_id);
 
+ALTER TABLE unit
+	ADD CONSTRAINT c_unique_u_serial UNIQUE (u_serial);
+	
 PROMPT Создение ограничений внешних ключей на поля unit
 ALTER TABLE unit
     ADD CONSTRAINT c_fk_u_asmy_mng_id 
@@ -25,6 +28,11 @@ ALTER TABLE unit
 	FOREIGN KEY (u_asmy_cont_id)
 	REFERENCES employee (emp_id);	
 	
+ALTER TABLE unit
+    ADD CONSTRAINT c_fk_u_asmy_disc_id
+	FOREIGN KEY (u_asmy_disc_id)
+	REFERENCES employee (emp_id);	
+	
 PROMPT Создание внутренних ограничений таблицы ejournal
 ALTER TABLE ejournal
 	ADD CONSTRAINT i_pk_ejournal PRIMARY KEY (ej_id);
@@ -38,8 +46,7 @@ ALTER TABLE ejournal
 ALTER TABLE ejournal
     ADD CONSTRAINT c_fk_ej_id
 	FOREIGN KEY (ej_author_id)
-	REFERENCES employee (emp_id);
-	
+	REFERENCES employee (emp_id);	
 	
 PROMPT Создание внутренних ограничений таблицы ejournal
 ALTER TABLE ejournal

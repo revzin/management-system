@@ -148,6 +148,7 @@ p {
 
 .employees tr:hover {background-color: #ddd;}
 
+
 .employee-editor {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
@@ -163,3 +164,34 @@ p {
 .employee-editor tr:nth-child(even){background-color: #f2f2f2}
 
 .employee-editor tr:hover {background-color: #ddd;}
+
+
+.units {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.units td, .units th {
+    border: 1px solid #ddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.units tr:hover {background-color: #ddd;}
+
+
+.order-finish-bad {
+	background-color: #FCC2C2;
+}
+
+.order-finish-good {
+	background-color: #8DFCC5;
+}
+
+.order-in-progress {
+	background-color: #FDFD9D;
+} 
+
+
+

@@ -15,7 +15,7 @@ CREATE TABLE employee
 	emp_role 		INTEGER 		NOT NULL,
 	emp_name 		VARCHAR2(50) 	NOT NULL,
 	emp_surname 	VARCHAR2(50) 	NOT NULL,
-	emp_email		VARCHAR2(50) 	NOT NULL,
+	emp_email		VARCHAR2(50) 	NOT NULL,	
 	emp_phone 		VARCHAR2(50)	NOT NULL,
 	emp_salary 		INTEGER 		NOT NULL,
 	emp_login 		VARCHAR2(20) 	NOT NULL,
@@ -27,12 +27,24 @@ CREATE TABLE  unit
 (
 	u_id			INTEGER,
 	u_serial		INTEGER			NOT NULL,
-	u_bom_table		VARCHAR(50)		NOT NULL,
-	u_asmy_mng_id	INTEGER,
+	u_asmy_mng_id	INTEGER			NOT NULL,
 	u_asmy_work_id	INTEGER,
 	u_asmy_cont_id	INTEGER,
+	u_asmy_disc_id	INTEGER,
 	u_state			INTEGER,
-	u_ord_date		TIMESTAMP		NOT NULL,
-	u_asm_date		TIMESTAMP,
-	u_ctrl_date		TIMESTAMP
+	u_ord_time		TIMESTAMP		NOT NULL,
+	u_asm_time		TIMESTAMP,
+	u_ctrl_time		TIMESTAMP,
+	u_disc_time		TIMESTAMP
 );
+
+PROMPT Создание таблицы manlog
+CREATE TABLE manlog 
+(
+	ej_id			INTEGER,
+	ej_empl			INTEGER,
+	ej_text			VARCHAR2(200),
+	ej_author_id	INTEGER
+);
+
+

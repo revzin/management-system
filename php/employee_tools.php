@@ -14,11 +14,11 @@ function AMSEmployeePermissionsByRole($role)
 		case AMS_ROLE_FIRED: {
 			return array();
 		}
-		case AMS_ROLE_ADM: {
+		/*case AMS_ROLE_ADM: {
 			return array(
 						AMS_ADMPERM_ADM
 						);
-		}
+		}*/
 		case AMS_ROLE_BOSS: {
 			return array(
 						AMS_PERM_EMP_VIEW_EMPLOYEES,
@@ -27,20 +27,33 @@ function AMSEmployeePermissionsByRole($role)
 						AMS_PERM_EMP_PROMOTE_TO_BOSS,
 						AMS_PERM_EMP_CAN_EDIT_BOSSES,
 						
-						AMS_PERM_WRHS_VIEW,
-						AMS_PERM_WRHS_EDIT
+						//AMS_PERM_WRHS_VIEW,
+						//AMS_PERM_WRHS_EDIT,
+						
+						AMS_PERM_UNIT_PLACE_ORDER,
+						AMS_PERM_UNIT_EDIT_ORDER,
+						AMS_PERM_UNIT_VIEW_ALL,
+						AMS_PERM_UNIT_ASSEMBLE
 						);
 		}
 		case AMS_ROLE_MGR: {
 			return array(
 						AMS_PERM_EMP_VIEW_EMPLOYEES,
-						AMS_PERM_EMP_EDIT_EMPLOYEES
+						AMS_PERM_EMP_EDIT_EMPLOYEES,
+						
+						AMS_PERM_UNIT_PLACE_ORDER,
+						AMS_PERM_UNIT_EDIT_ORDER,
+						AMS_PERM_UNIT_VIEW_ALL,
+						AMS_PERM_UNIT_ASSEMBLE
 						);
 		}
 		case AMS_ROLE_ASMY_WRK: {
 			return array(
 						AMS_PERM_EMP_VIEW_GROUP,
-						AMS_PERM_WRHS_VIEW
+						//AMS_PERM_WRHS_VIEW,
+						
+						AMS_PERM_UNIT_VIEW_RELEVANT,
+						AMS_PERM_UNIT_ASSEMBLE
 						);
 		}
 		default:
@@ -60,10 +73,11 @@ function AMSEmployeeRoleToString($role)
 			return 'контролёр';
 		case AMS_ROLE_MGR:
 			return 'менеджер';
-		case AMS_ROLE_WM:
-			return 'складской специалист';
-		case AMS_ROLE_ADM:
-			return 'IT';
+		/* не задействованы */
+		//case AMS_ROLE_WM:
+		//	return 'складской специалист';
+		//case AMS_ROLE_ADM:
+		//	return 'IT';
 		case AMS_ROLE_FIRED:
 		default:
 			return 'прошедший в жопу';
@@ -117,12 +131,14 @@ function AMSEmployeeSetupSession($id)
 	
 	$permissions = AMSEmployeePermissionsByRole($empldata["emp_role"]);
 	$name = $empldata["emp_name"] . ' ' . $empldata["emp_surname"];
+	if (!ToolsSessionExists())
+		session_start();
 	
-	session_start();
 	$_SESSION[SESSIONKEY_EMPLOYEE_ID] = $id;
 	$_SESSION[SESSIONKEY_EMPLOYEE_PERMISSIONS] = $permissions;
 	$_SESSION[SESSIONKEY_EMPLOYEE_NAME] = $name;
 	$_SESSION[SESSIONKEY_EMPLOYEE_ROLE] = $empldata["emp_role"];
+	
 	session_commit();
 }
 

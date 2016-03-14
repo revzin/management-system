@@ -3,7 +3,6 @@ require_once('employee_tools.php');
 require_once('common/ora_session.php');
 require_once('echo_tools.php');
 
-
 function append_role_option($role_id, $str, $employee_role)
 {
 	$str .= '<option value =' . strval($role_id);
@@ -25,11 +24,10 @@ function make_role_dropdown($can_fire, $employee_role)
 			
 	if (AMSEmployeeHasPermission(AMS_PERM_EMP_PROMOTE_TO_BOSS)) 
 		$str = append_role_option(AMS_ROLE_BOSS, $str, $employee_role); 
-	
-	$str = append_role_option(AMS_ROLE_ASMY_WRK, $str, $employee_role);
+		
 	$str = append_role_option(AMS_ROLE_MGR, $str, $employee_role);
-	$str = append_role_option(AMS_ROLE_ADM, $str, $employee_role);
-	$str = append_role_option(AMS_ROLE_WM, $str, $employee_role);
+	$str = append_role_option(AMS_ROLE_ASMY_WRK, $str, $employee_role);
+	$str = append_role_option(AMS_ROLE_CTL, $str, $employee_role);
 	
 	if (AMSEmployeeHasPermission(AMS_PERM_EMP_HIREFIRE))
 		$str = append_role_option(AMS_ROLE_FIRED, $str, $employee_role);
