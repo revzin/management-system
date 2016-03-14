@@ -15,11 +15,11 @@ CREATE TABLE employee
 	emp_role 		INTEGER 		NOT NULL,
 	emp_name 		VARCHAR2(50) 	NOT NULL,
 	emp_surname 	VARCHAR2(50) 	NOT NULL,
-	emp_email		VARCHAR2(50) 	NOT NULL,	
+	emp_email		VARCHAR2(100) 	NOT NULL,	
 	emp_phone 		VARCHAR2(50)	NOT NULL,
 	emp_salary 		INTEGER 		NOT NULL,
-	emp_login 		VARCHAR2(20) 	NOT NULL,
-	emp_password 	VARCHAR2(20) 	NOT NULL
+	emp_login 		VARCHAR2(50) 	NOT NULL,
+	emp_password 	VARCHAR2(50) 	NOT NULL
 );
 
 PROMPT Создание таблицы unit
@@ -41,10 +41,10 @@ CREATE TABLE  unit
 PROMPT Создание таблицы manlog
 CREATE TABLE manlog 
 (
-	ej_id			INTEGER,
-	ej_empl			INTEGER,
-	ej_text			VARCHAR2(200),
-	ej_author_id	INTEGER
+	ml_id			INTEGER,
+	ml_device_id	INTEGER,
+	ml_text			VARCHAR2(200),
+	ml_author_id	INTEGER
 );
 
 

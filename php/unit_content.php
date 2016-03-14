@@ -99,9 +99,9 @@ function expanded_state_to_string($expanded_state, $state_key)
 	}
 	if ($state_key == 'CONTROLLED') {
 		if ($val)
-			return 'прошло проверку';
+			return 'прошло контроль';
 		else
-			return 'не прошло проверку';	
+			return 'не прошло контроль';	
 	}
 	
 	if ($state_key == 'DISCARDED') {
