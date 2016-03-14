@@ -26,16 +26,17 @@ define('QUERY_GET_ENCODING', 			"SELECT value
 											FROM nls_database_parameters 
 											WHERE parameter = 'NLS_CHARACTERSET'");
 
-define('QUERY_READ_EMPLOYEE_JOURNAL', 	"SELECT ej.j_author_id, ej.j_text, ej.j_date
-										FROM employee e, TABLE(e.emp_journal) ej 
-										WHERE e.emp_id = ^emp_id ORDER BY ej.j_date ASC");
+define('QUERY_READ_EMPLOYEE_JOURNAL', 	"SELECT ej_empl, ej_timestamp, ej_author_id, ej_text
+											FROM ejournal
+											WHERE ej_empl = ^emp_id 
+											ORDER BY ej_timestamp ASC");
 
 define('QUERY_INSERT_NEW_EMPLOYEE',		"INSERT INTO employee 
 											(emp_name, emp_surname, emp_email, emp_login, emp_password,
-											emp_role, emp_salary, emp_phone, emp_journal)
+											emp_role, emp_salary, emp_phone)
 											 VALUES
 											 ('^emp_name', '^emp_surname', '^emp_email', '^emp_login', '^emp_password',
-											 ^emp_role, ^emp_salary, ^emp_phone, t_jrnl_table())");
+											 ^emp_role, ^emp_salary, ^emp_phone)");
 											 
 
 define('QUERY_UPDATE_EMPLOYEE',			"UPDATE employee
@@ -51,20 +52,22 @@ define('QUERY_UPDATE_EMPLOYEE',			"UPDATE employee
 
 define('QUERY_LOGIN_TO_ID',				"SELECT emp_id FROM employee WHERE emp_login = '^emp_login'");
 										
-define('QUERY_INSERT_INTO_EMP_JOURNAL',	"INSERT
-											INTO TABLE(
-												SELECT emp_journal
-												FROM employee
-												WHERE emp_id = ^emp_id
-											)
+define('QUERY_INSERT_INTO_EMP_JOURNAL',	"INSERT INTO ejournal
+											(
+												ej_empl,
+												ej_timestamp,
+												ej_author_id,
+												ej_text
+											)	
 											VALUES(
-												t_journal(CURRENT_TIMESTAMP, ^author_id, '^journal_emp_text')
+												^emp_id, CURRENT_TIMESTAMP, ^author_id, '^journal_emp_text'
 											)");
 
 define('QUERY_COUNT_ROLE',				"SELECT COUNT(emp_id) 
 											AS count 
 											FROM employee 
 											WHERE emp_role = ^emp_role");
+
 											
 define('QUERY_SGMT_ORDER_BY_ASC',		'ORDER BY ^sort ASC');
 define('QUERY_SGMT_ORDER_BY_DESC',		'ORDER BY ^sort DESC');

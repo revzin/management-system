@@ -42,3 +42,26 @@ END;
 
 PROMPT Включение триггера автоинкремента unit
 ALTER TRIGGER t_unit_auto_increment ENABLE;
+
+
+PROMPT Удаление последовательности автоинкремента ejournal
+DROP SEQUENCE s_ej_id_incr;
+
+PROMPT Создание последовательности автоинкремента ejournal
+CREATE SEQUENCE s_ej_id_incr -- запрещается emp_id = 0
+	START WITH 1 
+	INCREMENT BY 1;
+
+PROMPT Создание триггера автоинкремента ejournal
+CREATE OR REPLACE TRIGGER t_ej_id_auto_increment
+BEFORE INSERT ON ejournal
+FOR EACH ROW
+BEGIN
+	SELECT s_ej_id_incr.NEXTVAL
+	INTO :NEW.ej_id
+	FROM DUAL;
+END;
+/
+
+PROMPT Включение триггера автоинкремента ejournal
+ALTER TRIGGER t_ej_id_auto_increment ENABLE;

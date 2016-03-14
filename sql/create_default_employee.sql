@@ -7,8 +7,8 @@ INSERT INTO employee
 	emp_phone, 
 	emp_salary, 
 	emp_login, 
-	emp_password, 
-	emp_journal)
+	emp_password
+	)
 VALUES
 (
 	0,
@@ -18,8 +18,14 @@ VALUES
 	'88002000600',
 	1000,
 	'system',
-	'manager',
-	t_jrnl_table (
-		t_journal(CURRENT_TIMESTAMP, 10, 'Создал БД')
-	)
+	'manager'
+);
+
+INSERT INTO ejournal
+(
+	ej_empl, ej_timestamp, ej_author_id, ej_text
+)
+VALUES
+(
+	10, CURRENT_TIMESTAMP, 10, 'Установил АСУ фирмы'
 );

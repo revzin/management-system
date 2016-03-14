@@ -79,16 +79,16 @@ function validate_id($id)
 function journal_echo_row($row_array, $row_number)
 {
 	$row = $row_array[$row_number];
-	$employee_link_ref = 'employee.php?mode=detail&employee_id=' . $row['j_author_id'];
+	$employee_link_ref = 'employee.php?mode=detail&employee_id=' . $row['ej_author_id'];
 	
-	$row['j_author_id'] = AMSEmployeeID2Name($row['j_author_id']);
+	$row['ej_author_id'] = AMSEmployeeID2Name($row['ej_author_id']);
 
 	echo '<tr>';
 	echo '<td>' . strval($row_number + 1) .  '</td>';
 
-	ToolsEchoColumn($row, 'j_date', $link = FALSE, $timestamp_to_date = TRUE);
-	ToolsEchoColumn($row, 'j_text');
-	ToolsEchoColumn($row, 'j_author_id', $employee_link_ref);
+	ToolsEchoColumn($row, 'ej_timestamp', $link = FALSE, $timestamp_to_date = TRUE);
+	ToolsEchoColumn($row, 'ej_text');
+	ToolsEchoColumn($row, 'ej_author_id', $employee_link_ref);
 	
 	echo '</tr>';
 }
@@ -226,7 +226,7 @@ function AMSEchoEmployeeDetail($id)
 	$row_array = array();
 	$numrows = OracleQuickReadQuery(
 			QueryStringReplace(QUERY_READ_EMPLOYEE_JOURNAL, "emp_id", $id), 
-			array("j_author_id", "j_text", "j_date"),
+			array("ej_author_id", "ej_text", "ej_timestamp"),
 			$row_array);
 				
 	if (0 == $numrows)
