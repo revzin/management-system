@@ -1,0 +1,65 @@
+<h3> Изделие %%SERIAL%% </h3>
+<form action = 'unit.php' method = 'POST'>
+	<input type = "hidden" name = "unit_id" value = "%%UNITID%%" />
+	<table class = 'unit-editor'>
+		<tbody>
+			<tr class = 'table-header'>
+				<td>
+					Параметр
+				</td>
+				<td>
+					Значение
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Серийный номер:
+				</td>
+				<td>
+					%%SERIAL%%
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					Состояние:
+				</td>
+				<td>
+					%%READY_STATE%% <br /> %%READY_TIME%%
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					Ответственный монтажник:
+				</td>
+				<td>
+					%%ASMY_DROPDOWN%%
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					Ответственный контролёр:
+				</td>
+				<td>
+					%%CTL_DROPDOWN%%
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					Полномочия:
+				</td>
+				<td>
+					%%MY_ROLE%% <br />
+					%%STATE_MODIFY_INPUTS%%
+				</td>
+			</tr>
+			
+		</tbody>
+	</table>
+	<hr />
+	<h3> Отметки </h3> 
+	%%MAN_LOG_TABLE%%		
+</form>

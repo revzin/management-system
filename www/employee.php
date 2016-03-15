@@ -23,12 +23,11 @@ AMSEchoCurrentUserData();
 
 echo '<hr />';
 
-if (isset($_GET["employee_id"]))
-	AMSEchoEmployeeDetail($_GET["employee_id"]);
+
 
 echo '<hr />';
 
-AMSEchoEmployeeList();
+EmployeeHandleGET();
 
 ?>
 

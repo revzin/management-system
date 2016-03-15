@@ -440,7 +440,7 @@ function handle_post_employee_editor()
 		
 		$modified_employee_id = $rows[0];
 		
-		AMSEmployeeAddRowToJournal($modified_employee_id, MSG_JOURNAL_HIRED);
+		AMSEmployeeJournalWrite($modified_employee_id, MSG_JOURNAL_HIRED);
 	} 
 	else {
 		$old_role = AMSEmployeeGetRole($emp_id);
@@ -471,13 +471,13 @@ function handle_post_employee_editor()
 		
 		$new_role = $emp_role;
 		if ($old_role == AMS_ROLE_FIRED and $new_role != AMS_ROLE_FIRED) {
-			AMSEmployeeAddRowToJournal($emp_id, MSG_JOURNAL_REHIRED);
+			AMSEmployeeJournalWrite($emp_id, MSG_JOURNAL_REHIRED);
 		}
 		else if ($old_role != AMS_ROLE_FIRED and $new_role == AMS_ROLE_FIRED) {
-			AMSEmployeeAddRowToJournal($emp_id, MSG_JOURNAL_FIRED);
+			AMSEmployeeJournalWrite($emp_id, MSG_JOURNAL_FIRED);
 		}
 		else
-			AMSEmployeeAddRowToJournal($emp_id, MSG_JOURNAL_DATA_CHANGE);
+			AMSEmployeeJournalWrite($emp_id, MSG_JOURNAL_DATA_CHANGE);
 			
 		if ($emp_id == $_SESSION[SESSIONKEY_EMPLOYEE_ID])
 			AMSEmployeeSetupSession($emp_id);
@@ -487,10 +487,10 @@ function handle_post_employee_editor()
 
 function handle_post_employee_journal()
 {
-	$text = $_POST['journal_text'];
+	$text = ToolsKillHTML($_POST['journal_text']);
 	$id = $_POST['target_employee_id'];
 	if ($text != '') {
-		AMSEmployeeAddRowToJournal($id, $text);
+		AMSEmployeeJournalWrite($id, $text);
 		echo 'Запись в журнал добавлена';
 	}
 	AMSEchoEmployeeDetail($id);
@@ -512,14 +512,17 @@ function EmployeeHandlePOST()
 		handle_post_employee_journal();
 		return;
 	}	
+	
 }
 
 
 
 function EmployeeHandleGET()
 {
+	if (isset($_GET["employee_id"]))
+		AMSEchoEmployeeDetail($_GET["employee_id"]);
 
-
+	AMSEchoEmployeeList();
 }
 
 ?>

@@ -33,7 +33,9 @@ function AMSEmployeePermissionsByRole($role)
 						AMS_PERM_UNIT_PLACE_ORDER,
 						AMS_PERM_UNIT_EDIT_ORDER,
 						AMS_PERM_UNIT_VIEW_ALL,
-						AMS_PERM_UNIT_ASSEMBLE
+						AMS_PERM_UNIT_ASSEMBLE,
+						AMS_PERM_UNIT_CONTROL,
+						AMS_PERM_UNIT_DISCARD
 						);
 		}
 		case AMS_ROLE_MGR: {
@@ -50,6 +52,7 @@ function AMSEmployeePermissionsByRole($role)
 		case AMS_ROLE_CTL: {
 			return array(
 						AMS_PERM_EMP_VIEW_GROUP,
+						
 						AMS_PERM_UNIT_VIEW_RELEVANT,
 						AMS_PERM_UNIT_CONTROL
 						);
@@ -214,7 +217,7 @@ function AMSEmployeeJournalAccessible($my_role, $his_role, $my_id, $his_id)
 	return FALSE;
 }
 
-function AMSEmployeeAddRowToJournal($id, $text)
+function AMSEmployeeJournalWrite($id, $text)
 {
 	$my_role = $_SESSION[SESSIONKEY_EMPLOYEE_ROLE];
 	$my_id	= $_SESSION[SESSIONKEY_EMPLOYEE_ID];

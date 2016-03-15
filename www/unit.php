@@ -20,6 +20,8 @@ AMSEchoCurrentUserData();
 
 echo '<hr />';
 
+UnitHandlePOST();
+
 UnitHandleGET();
 
 echo '<hr />';

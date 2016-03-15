@@ -1,3 +1,6 @@
+
+/* ------------------------------------------------ */
+
 PROMPT Удаление последовательности автоинкремента employee
 DROP SEQUENCE s_emp_id_incr;
 
@@ -20,6 +23,7 @@ END;
 PROMPT Включение триггера автоинкремента employee
 ALTER TRIGGER t_emp_auto_increment ENABLE;
 
+/* ------------------------------------------------ */
 
 PROMPT Удаление последовательности автоинкремента unit
 DROP SEQUENCE s_unit_id_incr;
@@ -43,17 +47,18 @@ END;
 PROMPT Включение триггера автоинкремента unit
 ALTER TRIGGER t_unit_auto_increment ENABLE;
 
+/* ------------------------------------------------ */
 
 PROMPT Удаление последовательности автоинкремента серийного номера unit
 DROP SEQUENCE s_unit_serial_incr;
 
-PROMPT Создание последовательности автоинкремента серийного номера unit
+PROMPT Создание последовательности автоинкремента серийного номера  unit
 CREATE SEQUENCE s_unit_serial_incr -- запрещается emp_id = 0
-	START WITH 10000 
+	START WITH 100000 
 	INCREMENT BY 1;
 
-PROMPT Создание триггера автоинкремента unit
-CREATE OR REPLACE TRIGGER t_unit_serial_auto_increment
+PROMPT Создание триггера автоинкремента серийного unit
+CREATE OR REPLACE TRIGGER t_unit_serial_increment
 BEFORE INSERT ON unit
 FOR EACH ROW
 BEGIN
@@ -66,7 +71,31 @@ END;
 PROMPT Включение триггера автоинкремента unit
 ALTER TRIGGER t_unit_auto_increment ENABLE;
 
+/* ------------------------------------------------ */
 
+PROMPT Удаление последовательности автоинкремента id manlog
+DROP SEQUENCE s_manlog_pk_incr;
+
+PROMPT Создание последовательности автоинкремента id manlog
+CREATE SEQUENCE s_manlog_pk_incr
+	START WITH 1 
+	INCREMENT BY 1;
+
+PROMPT Создание триггера автоинкремента manlog
+CREATE OR REPLACE TRIGGER t_manlog_pk_incr
+BEFORE INSERT ON manlog
+FOR EACH ROW
+BEGIN
+	SELECT s_manlog_pk_incr.NEXTVAL
+	INTO :NEW.ml_id
+	FROM DUAL;
+END;
+/
+
+PROMPT Включение триггера автоинкремента id manlog
+ALTER TRIGGER t_manlog_pk_incr ENABLE;
+
+/* ------------------------------------------------ */
 
 PROMPT Удаление последовательности автоинкремента ejournal
 DROP SEQUENCE s_ej_id_incr;

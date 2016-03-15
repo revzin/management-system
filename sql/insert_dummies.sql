@@ -39,7 +39,7 @@ INSERT INTO ejournal
 )
 VALUES
 (
-	11, CURRENT_TIMESTAMP, 10, 'Взялся на работу'
+	11, CURRENT_TIMESTAMP, 10, 'Принят на работу'
 );
 
 INSERT INTO employee
@@ -71,7 +71,7 @@ INSERT INTO ejournal
 )
 VALUES
 (
-	12, CURRENT_TIMESTAMP, 11, 'Взялся на работу'
+	12, CURRENT_TIMESTAMP, 11, 'Принят на работу'
 );
 
 INSERT INTO employee
@@ -103,7 +103,7 @@ INSERT INTO ejournal
 )
 VALUES
 (
-	13, CURRENT_TIMESTAMP, 11, 'Взялся на работу'
+	13, CURRENT_TIMESTAMP, 11, 'Принят на работу'
 );
 
 INSERT INTO employee
@@ -135,7 +135,7 @@ INSERT INTO ejournal
 )
 VALUES
 (
-	14, CURRENT_TIMESTAMP, 10, 'Взялся на работу'
+	14, CURRENT_TIMESTAMP, 10, 'Принят на работу'
 );
 
 INSERT INTO employee
@@ -167,7 +167,7 @@ INSERT INTO ejournal
 )
 VALUES
 (
-	15, CURRENT_TIMESTAMP, 10, 'Взялся на работу'
+	15, CURRENT_TIMESTAMP, 10, 'Принят на работу'
 );
 
 INSERT INTO employee
@@ -199,7 +199,7 @@ INSERT INTO ejournal
 )
 VALUES
 (
-	16, CURRENT_TIMESTAMP, 10, 'Взялся на работу'
+	16, CURRENT_TIMESTAMP, 10, 'Принят на работу'
 );
 
 INSERT INTO ejournal

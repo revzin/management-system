@@ -78,10 +78,5 @@ ALTER TABLE manlog
 PROMPT Создание ограничений внешних ключей таблицы manlog	
 ALTER TABLE manlog
     ADD CONSTRAINT c_fk_ml_device_id
-	FOREIGN KEY (ml_device_id)
+	FOREIGN KEY (ml_unit_id)
 	REFERENCES unit (u_id);
-
-ALTER TABLE manlog
-    ADD CONSTRAINT c_fk_ml_author_id
-	FOREIGN KEY (ml_author_id)
-	REFERENCES employee (emp_id);	

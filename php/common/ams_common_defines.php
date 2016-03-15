@@ -52,5 +52,7 @@ define("AMS_PERM_UNIT_VIEW_RELEVANT",	12);
 define("AMS_PERM_UNIT_VIEW_ALL",		13);
 define("AMS_PERM_UNIT_ASSEMBLE",		14);
 define("AMS_PERM_UNIT_EDIT_ORDER",		15);
+define("AMS_PERM_UNIT_CONTROL",			16);
+define("AMS_PERM_UNIT_DISCARD",			17);
 
 ?>

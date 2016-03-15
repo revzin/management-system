@@ -42,9 +42,9 @@ PROMPT Создание таблицы manlog
 CREATE TABLE manlog 
 (
 	ml_id			INTEGER,
-	ml_device_id	INTEGER,
+	ml_unit_id		INTEGER,
 	ml_text			VARCHAR2(200),
-	ml_author_id	INTEGER
+	ml_time			TIMESTAMP
 );
 
 

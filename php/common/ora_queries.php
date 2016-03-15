@@ -107,7 +107,70 @@ define('QUERY_INSERT_ORDER',			"INSERT INTO unit
 												0, /* AMS_STATE_NEW */
 												CURRENT_TIMESTAMP
 											)");
+											
+define('QUERY_ASSEMBLE_UNIT',			"UPDATE unit
+											SET 
+												u_asm_time = CURRENT_TIMESTAMP,
+												u_state = 3 /* AMS_STATE_ASMY_COMPLETE */
+											WHERE
+												u_id = ^u_id");
+												
+define('QUERY_UPDATE_ASMY_WORKER',		"UPDATE unit
+												SET 
+													u_asmy_work_id = ^u_asmy_work_id
+												WHERE
+													u_id = ^u_id");
+													
+define('QUERY_UPDATE_CONTROLLER',		"UPDATE unit
+											SET 
+												u_asmy_cont_id = ^u_asmy_cont_id
+											WHERE
+												u_id = ^u_id");
+													
+define('QUERY_GET_LAST_PLACED_UNIT_ID',	"SELECT MAX(u_id)
+											AS u_id
+											FROM unit");
+											
+define('QUERY_UNIT_ID_TO_SERIAL',		"SELECT u_serial
+											FROM unit
+											WHERE 
+												u_id = ^u_id");
+											
+define('QUERY_CONTROL_UNIT_OK',			"UPDATE unit
+											SET 
+												u_ctrl_time = CURRENT_TIMESTAMP,
+												u_state = 4 /* AMS_STATE_FINISH_COMPLETE */
+											WHERE
+												u_id = ^u_id");
+												
+define('QUERY_CONTROL_UNIT_DISCARD',	"UPDATE unit
+											SET 
+												u_ctrl_time = CURRENT_TIMESTAMP,
+												u_state = 5 /* AMS_STATE_FINISH_FAILURE */
+											WHERE
+												u_id = ^u_id");
 
+define('QUERY_INSERT_INTO_LOG',			"INSERT INTO manlog
+											(
+												ml_unit_id,
+												ml_text,
+												ml_time
+											)	
+											VALUES
+											(
+												^unit_id,
+												'^text',
+												CURRENT_TIMESTAMP
+											)");
+
+define('QUERY_SELECT_FROM_LOG',			"SELECT ml_text, ml_time, ml_unit_id
+											FROM
+												manlog
+											WHERE
+												ml_unit_id = ^unit_id
+											ORDER BY
+												ml_time ASC");
+																								
 define('QUERY_GET_UNITS',				"SELECT 
 											u_serial,
 											u_id,
@@ -122,6 +185,23 @@ define('QUERY_GET_UNITS',				"SELECT
 											u_disc_time
 										FROM
 											unit");
+
+define('QUERY_GET_UNIT_DATA',			"SELECT 
+											u_serial,
+											u_id,
+											u_asmy_mng_id,
+											u_asmy_work_id,
+											u_asmy_cont_id,
+											u_asmy_disc_id,
+											u_state,
+											u_ord_time,
+											u_asm_time,
+											u_ctrl_time,
+											u_disc_time
+										FROM
+											unit
+										WHERE
+											u_id = ^u_id");											
 											
 define('QUERY_SGMT_ORDER_BY_ASC',		'ORDER BY ^sort ASC');
 define('QUERY_SGMT_ORDER_BY_DESC',		'ORDER BY ^sort DESC');
@@ -147,7 +227,7 @@ function QueryStringReplace($query, $keys, $args)
 	}
 	
 	if (strpos($query, '^') !== FALSE)
-		die("QueryStringReplace: bad keys // " . debug_print_backtrace());
+		die("QueryStringReplace: bad keys // " . $query);
 		
 	return $query;
 }
