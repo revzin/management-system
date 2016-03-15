@@ -456,6 +456,10 @@ function echo_order_detail($u_id)
 	$editor_html = str_replace('%%SERIAL%%', $unit['u_serial'], $editor_html);
 	
  	$editor_html = str_replace('%%UNITID%%', $u_id, $editor_html);
+	
+	$editor_empl_link = '<a href = "employee.php?employee_id=%%ID%%">%%NAME%%</a>';
+	
+	
 	if (in_array('CAN_CHANGE_ASMY_WORKER', $abilities)) {
 		$editor_html 
 			= str_replace('%%ASMY_DROPDOWN%%', 
@@ -463,8 +467,11 @@ function echo_order_detail($u_id)
 						$editor_html);
 	}
 	else if ($unit["u_asmy_work_id"]) {
+	
+		$empl_html = str_replace('%%ID%%', strval($u_id), $editor_empl_link);
+		$empl_html = str_replace('%%NAME%%', AMSEmployeeID2Name($unit["u_asmy_work_id"]), $empl_html);
 		$editor_html 
-			= str_replace('%%ASMY_DROPDOWN%%', AMSEmployeeID2Name($unit["u_asmy_work_id"]), $editor_html);
+			= str_replace('%%ASMY_DROPDOWN%%', $empl_html, $editor_html);
 	} else
 		$editor_html = str_replace('%%ASMY_DROPDOWN%%', MSG_NOT_SET, $editor_html);
 	
@@ -475,8 +482,11 @@ function echo_order_detail($u_id)
 						$editor_html);
 	}
 	else if ($unit["u_asmy_cont_id"]) {
+		$empl_html = str_replace('%%ID%%', strval($u_id), $editor_empl_link);
+		$empl_html = str_replace('%%NAME%%', AMSEmployeeID2Name($unit["u_asmy_cont_id"]), $empl_html);
+		error_log($empl_html);
 		$editor_html 
-			= str_replace('%%CTL_DROPDOWN%%', AMSEmployeeID2Name($unit["u_asmy_cont_id"]), $editor_html);
+			= str_replace('%%CTL_DROPDOWN%%', $empl_html, $editor_html);
 	} else
 		$editor_html = str_replace('%%CTL_DROPDOWN%%', MSG_NOT_SET, $editor_html);
 	
