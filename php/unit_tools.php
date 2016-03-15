@@ -183,7 +183,7 @@ function AMSUnitUpdateCtrlWorker($unit_id, $worker_id)
 				array("u_asmy_cont_id", "u_state"),
 				$rows);
 	
-	if ($rows[0]['u_state'] >= AMS_STATE_ASMY_COMPLETE)
+	if ($rows[0]['u_state'] >= AMS_STATE_FINISH_OK)
 		return;
 
 	if ($rows[0]['u_asmy_cont_id'] == $worker_id)
