@@ -210,3 +210,6 @@ VALUES
 (
 	16, CURRENT_TIMESTAMP, 11, 'Был уволен как криминальный элемент'
 );
+
+COMMIT;
+

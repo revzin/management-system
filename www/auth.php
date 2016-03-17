@@ -2,6 +2,7 @@
 
 require_once("../php/employee_tools.php");
 require_once("../php/www_tools.php");
+require_once("../php/echo_tools.php");
 
 ToolsDropAllBrowserCache();
 
@@ -36,21 +37,43 @@ if (is_login_attempt()) {
 		ToolsRedirectClient("index.php");
 	}
 }
+
 ?>
 
-<html>
-	<header>
-		<meta charset="utf-8" /> 
-		<title> Вход </title>
-	</header>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" href="style.css">
+</head>
+
+<?
+
+
+$login_form = "
 	<body>
-		<?php if ($flag_bad_login) echo "Данные неверны"; ?>
 		<form action = 'auth.php' method = 'POST'>
 			Логин:
-			<input type = 'text' name = 'login' /> <br />
+			<input type = 'text' name = 'login' class = 'auth'/> <br />
 			Пароль:
-			<input type = 'password' name = 'password' /> <br />
+			<input type = 'password' name = 'password'  class = 'auth'/> <br />
 			<input type = 'submit' name = 'Логин'> <br />
 		</form>
-	</body>
-</html>
+	</body> ";
+
+
+$code = '';
+if ($flag_bad_login) 
+	$code .= 'Данные неверны </br>';
+
+$code .= $login_form;
+
+$html = file_get_contents("../html/workstation_template.html");
+
+$html = str_replace('%MODULE_CONTENT_GENERATE%', $code, $html);
+$html = str_replace('%MODULE_NAME%', "Авторизация", $html);
+$html = str_replace('%GENERATE_NAV%', ToolsGenerateNav(), $html);
+$html = AMSEmployeeFillCredForm($html);
+
+echo $html;	
+
+
+?>

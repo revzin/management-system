@@ -201,7 +201,40 @@ define('QUERY_GET_UNIT_DATA',			"SELECT
 										FROM
 											unit
 										WHERE
-											u_id = ^u_id");											
+											u_id = ^u_id");		
+
+define('QUERY_COUNT_UNIT_FOR_INDEX',	'SELECT
+											COUNT(u_id) as total
+										FROM
+											unit');
+											
+define('QUERY_COUNT_NEW_FOR_INDEX',		'SELECT
+											COUNT(u_id) as total
+										FROM
+											unit
+										WHERE
+											u_state = 0');
+											
+define('QUERY_COUNT_ASMY_FOR_INDEX',	'SELECT
+											COUNT(u_id) as total
+										FROM
+											unit
+										WHERE
+											u_state = 3');
+											
+define('QUERY_COUNT_GOOD_FOR_INDEX',	'SELECT
+											COUNT(u_id) as total
+										FROM
+											unit
+										WHERE
+											u_state = 4');
+											
+define('QUERY_COUNT_BAD_FOR_INDEX',	'SELECT
+											COUNT(u_id) as total
+										FROM
+											unit
+										WHERE
+											u_state = 5');		
 											
 define('QUERY_SGMT_ORDER_BY_ASC',		'ORDER BY ^sort ASC');
 define('QUERY_SGMT_ORDER_BY_DESC',		'ORDER BY ^sort DESC');

@@ -10,30 +10,23 @@ AMSEmployeeRedirectAuth();
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet" href="style.css">
-<title> Изделия_v0 </title>
 </head>
 <body>
 
 <?php
 
-AMSEchoCurrentUserData();
-
-echo '<hr />';
-
+ob_start();
 UnitHandlePOST();
-
 UnitHandleGET();
+$content = ob_get_clean();
 
-echo '<hr />';
+$html = file_get_contents("../html/workstation_template.html");
 
+$html = str_replace('%MODULE_CONTENT_GENERATE%', $content, $html);
+$html = str_replace('%MODULE_NAME%', "Изделия", $html);
+$html = str_replace('%GENERATE_NAV%', ToolsGenerateNav(), $html);	
+$html = AMSEmployeeFillCredForm($html);
+
+echo $html;
 
 ?>
-
-<br /> <hr /> <br />
-
-<?php
-
-?>
-
-</body>
-</html>

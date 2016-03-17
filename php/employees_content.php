@@ -269,7 +269,17 @@ function AMSEchoEmployeeList()
 		
 	echo "<table class = 'employees'> <tbody>";
 	$header = file_get_contents("../html/employee_table_header.html");
+	
+	$create_empl_string = '';
+	
+	if (AMSEmployeeHasPermission(AMS_PERM_EMP_HIREFIRE)) {
+		$create_empl_string = "<a href = 'employee.php?employee_id=NEW' /a> Создать сотрудника </a>";
+	}
+	
+	$header = str_replace('%%CREATE_EMP%%', $create_empl_string, $header);
+	
 	echo $header;
+	
 	for($i = 0; $i < count($row_array); $i += 1) {
 		emp_echo_row($row_array, $i);
 	}

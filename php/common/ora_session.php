@@ -135,13 +135,7 @@ function OracleQuickReadQuery($query_string, $keys, &$result, $use_default_ocire
 		}
 	}
 	else {		
-		while (OCIFetch($qr)) {
-			if ($use_default_ocires)
-				$result[$i] = OCIResult($qr, strtoupper(strval($keys)));
-			else
-				$result[$i] = OCIResultCustom($qr, strtoupper($keys));
-			$i += 1;
-		}
+		die('OQRQ: not an array call: ' . $query_string);
 	}
 	
 	OracleDisconnect($dbc);

@@ -269,11 +269,14 @@ function echo_order_list()
 	
 	$order_inp_string = "<input type = submit value = 'Создать заказ' /> <input type = hidden name = 'new_order'>";
 	
+	$order_filter_string = "<a href = 'unit.php?only_active'> Только активные изделия </a> &nbsp; <a href = 'unit.php'> Все изделия </a>";
+	
 	if (AMSEmployeeHasPermission(AMS_PERM_UNIT_PLACE_ORDER))
 		$html_table = str_replace('%%PLACE_ORDER%%', $order_inp_string, $html_table);
 	else 
 		$html_table = str_replace('%%PLACE_ORDER%%', '', $html_table);
 	
+	$html_table = str_replace("%%FILTER_ORDERS%%", $order_filter_string, $html_table);
 	
 	if (strval($what_units) == 'NO') {
 		$html_table = str_replace('%%UNIT_TABLE_ROWS%%', MSG_NO_DATA_TO_SHOW, $html_table);
@@ -294,6 +297,15 @@ function echo_order_list()
 									QUERY_SGMT_WHERE_VALUE, 
 									array('param', 'value'), 
 									array('u_asmy_cont_id', $my_id));
+		}
+	}
+	
+	if (isset($_GET['only_active'])) {
+		if (strpos($query, 'WHERE')) {
+			$query .= 'AND (u_state = 0 OR u_state = 3) ';
+		}
+		else {
+			$query .= ' WHERE u_state = 0 OR u_state = 3 ';
 		}
 	}
 	
@@ -484,7 +496,6 @@ function echo_order_detail($u_id)
 	else if ($unit["u_asmy_cont_id"]) {
 		$empl_html = str_replace('%%ID%%', strval($u_id), $editor_empl_link);
 		$empl_html = str_replace('%%NAME%%', AMSEmployeeID2Name($unit["u_asmy_cont_id"]), $empl_html);
-		error_log($empl_html);
 		$editor_html 
 			= str_replace('%%CTL_DROPDOWN%%', $empl_html, $editor_html);
 	} else

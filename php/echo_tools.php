@@ -76,14 +76,41 @@ function ToolsEnquote($str)
 
 function ToolsKillHTML($str)
 {
-	$str = str_replace('<', '', $str);
-	$str = str_replace('>', '', $str);
-	$str = str_replace('>', '=', $str);
-	$str = str_replace(',', '=', $str);
-	$str = str_replace('.', '=', $str);
-	$str = str_replace('"', '=', $str);
-	return $str;
+	
+	$ret = '';
+	
+	$copying = FALSE;
+	
+	for ($i = 0; $i < strlen($str); $i += 1) {
+		if ('<' == $str[i])
+			$copying = FALSE;
+		
+		if ('>' == $str[i])
+			$copying = TRUE;
+			
+		if ($copying)
+			$ret[] = $str[i];
+	}
+	
+	$ret = str_replace('>', '=', $ret);
+	$ret = str_replace(',', '=', $ret);
+	$ret = str_replace('.', '=', $ret);
+	$ret = str_replace('"', '=', $ret);
+	return $ret;
 }
 
+
+function ToolsGenerateNav()
+{
+	$html = '';
+	$html = '<h2> Навигация по АСУ </h2>';
+	$html .= '<ul>';
+	$html .= '<li><a href = "index.php"> Главная страница </a>';
+	$html .= '<li><a href = "unit.php"> Изделия </a>';
+	$html .= '<li><a href = "employee.php"> Сотрудники </a>';
+	$html .= '<li><a href = "auth.php"> Авторизация </a>';
+	$html .= '</ul>';
+	return $html;
+}
 
 ?>

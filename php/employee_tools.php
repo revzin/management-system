@@ -120,12 +120,12 @@ function AMSEmployeeGetRole($id)
 {
 	$query = QueryStringReplace(QUERY_GET_USER_ROLE, 'id', $id);
 	$rows = array();
-	$numrows = OracleQuickReadQuery($query, 'emp_role', $rows);
+	$numrows = OracleQuickReadQuery($query, array('emp_role'), $rows);
 	
 	if (0 == $numrows)
 		return AMS_ROLE_FIRED;
 	
-	$role = intval($rows[0]);
+	$role = intval($rows[0]['emp_role']);
 	return $role;
 }
 
@@ -154,7 +154,8 @@ function AMSEmployeeSetupSession($id)
 
 function AMSEmployeeDestroySession()
 {
-	ToolsEndSession();
+	if (ToolsSessionExists())
+		ToolsEndSession();
 }
 
 function AMSEmployeeID2Name($id)
@@ -242,8 +243,24 @@ function AMSEmployeeCountRole($role)
 {
 	$query = QueryStringReplace(QUERY_COUNT_ROLE, "emp_role", $role);
 	$rows = array();
-	$numrows = OracleQuickReadQuery($query, "count", $rows);
+	$numrows = OracleQuickReadQuery($query, array("count"), $rows);
 	return intval($rows[0]);
 }
+	
+function AMSEmployeeFillCredForm($html) 
+{
+	if (ToolsSessionExists()) {
+		$name = AMSEmployeeID2Name($_SESSION[SESSIONKEY_EMPLOYEE_ID]);
+		$role = AMSEmployeeRoleToString($_SESSION[SESSIONKEY_EMPLOYEE_ROLE]);
+		
+		$html = str_replace('%%NAME%%', $name, $html);
+		$html = str_replace('%%ROLE%%', $role, $html);
+	} 
+	else {
+		$html = str_replace('%%NAME%%', '', $html);
+		$html = str_replace('%%ROLE%%', '', $html);
+	}
+	return $html;
+}	
 	
 ?>

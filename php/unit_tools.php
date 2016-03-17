@@ -107,7 +107,7 @@ function AMSUnitPlaceOrder()
 			die('AMSUnitPlaceOrder: bad internal error: ' . var_dump($e));
 		
 		$rows = array();
-		$numrows = OracleQuickReadQuery(QUERY_GET_LAST_PLACED_UNIT_ID, "u_id", $rows);
+		$numrows = OracleQuickReadQuery(QUERY_GET_LAST_PLACED_UNIT_ID, array("u_id"), $rows);
 		$u_id = $rows[0]['u_id'];
 		
 		AMSUnitLog($u_id, manlog_link_employee(MSG_MANLOG_ORDER_PLACED, $my_id));
@@ -139,13 +139,13 @@ function AMSUnitID2Serial($id)
 	$rows = array();
 	$numrows = OracleQuickReadQuery(
 							QueryStringReplace(QUERY_UNIT_ID_TO_SERIAL, 'u_id', $id), 
-							"u_serial", 
+							array("u_serial"), 
 							$rows);
 	if (!$numrows) {
 		die('AMSUnitID2Serial: nonexisting order');
 	}
 
-	$serial = $rows[0];
+	$serial = $rows[0]["u_serial"];
 	return $serial;
 }
 

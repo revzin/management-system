@@ -1,69 +1,32 @@
-﻿<!DOCTYPE html>
-<html>
-	<head>	
-		
-		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-		<link rel='stylesheet' href='style.css'>
-		
-		<title>
-			%MODULE_NAME%
-		</title>
+﻿<title>
+	%MODULE_NAME%
+</title>
 
-	</head>
 
-	<body>
-		<div id = 'userdata'> 
-			<table>
-				<tbody> 
-					<tr> 
-						<td> 
-							Имя: 
-						</td> 
-						<td>
-							<i>%USER_NAME%</i>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							Должность:
-						</td>
-						<td>
-							<i>%USER_JOB%</i>.
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		
-		<div id = 'container'> 
-			<div id = 'left'>
-				<div id = 'logo'> 
-					<img src="..\img\iu4_logo.jpg" id = 'logo-img' alt="iu4 logo">
-				</div>
-				<div id = 'nav'> 
-					<h3> Навигация: <br />
-				
-					<div> 
-						%NAV_GENERATE% 
-					</div>
-				</div>	
-			</div >
-		
-			<div id = 'right'> 
-				<div id = 'header'> 
-					<h1> Модуль </h1>
-				</div>
-				<hr />
-				
-				<div id = 'content-box'> 
-					<h2> %MODULE_NAME% </h2>
-					%MODULE_CONTENT_GENERATE%
-				</div>
-			</div>
-			
-		</div>  
-		
-		<div id = 'footer'> ДЗ КТБД 2016, Г. Ревзин ИУ4-82. </div>
-	
-	</body>
-</html>
+<body>
+
+
+
+<div id="header">
+<center> <h1> АСУ ТП изготовления изделия "Осциллятор на ОУ" </h1> </center> <br />
+<h2> Страница '%MODULE_NAME%' </h2>
+</div>
+
+<div id="nav">
+%GENERATE_NAV%
+</div>
+
+<div id="section">
+%MODULE_CONTENT_GENERATE%
+</div>
+
+<div id="footer">
+ДЗ КТБД 2016 © Г. Ревзин ИУ4-82
+</div>
+
+
+<div id="userdata">
+%%NAME%%</br> %%ROLE%%
+</div>
+
+</body>
