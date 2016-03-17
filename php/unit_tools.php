@@ -2,6 +2,7 @@
 require_once('common/ora_session.php');
 require_once('echo_tools.php');
 require_once('employee_tools.php');
+require_once('barcode39.php');
 
 function AMSUnitGetStateForRole($role) {
 	if (($role == AMS_ROLE_BOSS) or ($role == AMS_ROLE_MGR)) {
@@ -54,7 +55,9 @@ function AMSUnitMyAbilitiesWithUnit($unit_id)
 										"u_asmy_disc_id", "u_asm_time", "u_ctrl_time",
 										"u_disc_time"),
 						$rows);
-						
+	if (0 == $numrows)
+		return array();
+	
 	$unit_data = $rows[0];
 	$state = $unit_data['u_state'];
 
@@ -272,7 +275,10 @@ function AMSUnitControlOrder($u_id, $is_good)
 
 function AMSUnitMakePDFReport($id)
 {
-
+	$pdf=new PDF_Code39();
+	$pdf->AddPage();
+	$pdf->Code39(80,40,'CODE 39',1,10);
+	$pdf->Output();
 }
 
 function AMSUnitLog($id, $text)

@@ -35,7 +35,8 @@ function AMSEmployeePermissionsByRole($role)
 						AMS_PERM_UNIT_VIEW_ALL,
 						AMS_PERM_UNIT_ASSEMBLE,
 						AMS_PERM_UNIT_CONTROL,
-						AMS_PERM_UNIT_DISCARD
+						AMS_PERM_UNIT_DISCARD,
+						AMS_PERM_UNIT_REPORT
 						);
 		}
 		case AMS_ROLE_MGR: {
@@ -45,7 +46,8 @@ function AMSEmployeePermissionsByRole($role)
 						
 						AMS_PERM_UNIT_PLACE_ORDER,
 						AMS_PERM_UNIT_EDIT_ORDER,
-						AMS_PERM_UNIT_VIEW_ALL
+						AMS_PERM_UNIT_VIEW_ALL,
+						AMS_PERM_UNIT_REPORT
 						);
 		}
 		
@@ -54,7 +56,8 @@ function AMSEmployeePermissionsByRole($role)
 						AMS_PERM_EMP_VIEW_GROUP,
 						
 						AMS_PERM_UNIT_VIEW_RELEVANT,
-						AMS_PERM_UNIT_CONTROL
+						AMS_PERM_UNIT_CONTROL,
+						AMS_PERM_UNIT_REPORT
 						);
 		}
 		case AMS_ROLE_ASMY_WRK: {

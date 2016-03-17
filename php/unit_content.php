@@ -3,6 +3,22 @@ require_once('unit_tools.php');
 require_once('employee_tools.php');
 require_once('echo_tools.php');
 
+function AMSUnitStateString($u_id)
+{
+	$rows = array();
+	$numrows = OracleQuickReadQuery(
+						QueryStringReplace(QUERY_GET_UNIT_DATA, 'u_id', $u_id),
+						array("u_serial", "u_id", "u_asmy_mng_id", "u_asmy_work_id", 
+									"u_asmy_cont_id", "u_state", "u_ord_time",
+									"u_asmy_disc_id", "u_asm_time", "u_ctrl_time",
+									"u_disc_time"),
+						$rows);
+	if ($numrows == 0)
+		die('Incorrect unit id');
+		
+	return state_to_string($rows[0]['u_state'], unit_expand_state($rows[0]));
+}
+
 function unit_expand_state($unit_row_values)
 {
 	$state = $unit_row_values['u_state'];
@@ -14,12 +30,12 @@ function unit_expand_state($unit_row_values)
 	$r['CONTROLLED'] = FALSE;
 	$r['DISCARDED'] = FALSE;
 	
-	if ($state['u_asmy_work_id'])
+	if ($unit_row_values['u_asmy_work_id'])
 		$r['ASMY_MAN_SET'] = TRUE;
 	else 
 		$r['ASMY_MAN_SET'] = FALSE;
 	
-	if ($state['u_asmy_ctl_id'])
+	if ($unit_row_values['u_asmy_cont_id'])
 		$r['CTL_MAN_SET'] = TRUE;
 	else 
 		$r['CTL_MAN_SET'] = FALSE;
@@ -78,13 +94,21 @@ function expanded_state_to_css_class($expanded_state)
 	return 'order-in-progress';
 }
 
-function state_to_string($state) 
+function state_to_string($state, $expanded_state) 
 {
 	switch ($state) {
-		case AMS_STATE_NEW:
-			return "ожидает монтаж";
-		case AMS_STATE_ASMY_COMPLETE:
-			return "ожидает контроль";
+		case AMS_STATE_NEW: {
+			if ($expanded_state['ASMY_MAN_SET'])
+				return "ожидает монтаж";
+			else
+				return "ожидает назначения монтажника";
+		}
+		case AMS_STATE_ASMY_COMPLETE: {
+			if ($expanded_state['ASMY_MAN_SET'])
+				return "ожидает контроль";
+			else
+				return "ожидает назначения контролёра";
+		}
 		case AMS_STATE_FINISH_OK:
 			return "выпущено";
 		case AMS_STATE_FINISH_FAILURE:
@@ -184,7 +208,7 @@ function build_list_row($row_template, $rows, $row_id)
 	
 	/* заполняем шаблон */
 	
-	$r = str_replace('%%READY_STATE%%', state_to_string($state), $r);
+	$r = str_replace('%%READY_STATE%%', state_to_string($state, $expanded_state), $r);
 	
 	if ($expanded_state['DISCARDED']) {
 		$r = str_replace('%%READY_TIME%%',  OracleTrimTimestampToDateTime($values['u_disc_time']), $r);
@@ -300,6 +324,7 @@ function echo_order_list()
 		}
 	}
 	
+	/* говнокостыль, чтобы дописывать после WHERE */
 	if (isset($_GET['only_active'])) {
 		if (strpos($query, 'WHERE')) {
 			$query .= 'AND (u_state = 0 OR u_state = 3) ';
@@ -462,6 +487,9 @@ function echo_order_detail($u_id)
 										"u_disc_time"),
 							$rows);
 	
+	if (0 == $numrows)
+		return;
+	
 	$unit = $rows[0];
 	$expanded_state = unit_expand_state($unit);
 	
@@ -503,7 +531,7 @@ function echo_order_detail($u_id)
 	
 	$editor_html = str_replace('%%MY_ROLE%%', get_my_role(), $editor_html);
 	
-	$editor_html = str_replace('%%READY_STATE%%', state_to_string($unit['u_state']), $editor_html);
+	$editor_html = str_replace('%%READY_STATE%%', state_to_string($unit['u_state'], $expanded_state), $editor_html);
 	
 	if ($expanded_state['DISCARDED']) {
 		$editor_html 
@@ -539,6 +567,14 @@ function echo_order_detail($u_id)
 	/* ------ */
 	
 	$editor_html = str_replace('%%MAN_LOG_TABLE%%', get_man_log($u_id), $editor_html);
+	
+	if (AMSEmployeeHasPermission(AMS_PERM_UNIT_REPORT)) {	
+		$pdflink = '<a href="pdfserve.php?unitrep&unit_id=' . $u_id . '"> PDF-выписка </a>';
+		$editor_html = str_replace('%%PDF_LINK%%', $pdflink, $editor_html);	
+	}
+	else {
+		$editor_html = str_replace('%%PDF_LINK%%', '', $editor_html);	
+	}
 	
 	echo $editor_html;
 }

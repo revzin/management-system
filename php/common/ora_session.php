@@ -45,7 +45,7 @@ function OracleOutString($dbstring)
 
 function OracleInString($dbstring)
 {
-	return _cp1251_to_utf8($dbstring);
+	return _utf8_to_cp1251($dbstring);
 }
 
 function OCIResultCustom($statement, $colname)
@@ -189,7 +189,8 @@ $_out_arr = array (
         chr(209).chr(141), chr(209).chr(142), chr(209).chr(143)
     );   
 	
-function _cp1251_to_utf8($txt)  {
+function _cp1251_to_utf8($txt)  
+{
 	global $_in_arr, $_out_arr;
 	$txt = str_replace($_in_arr, $_out_arr, $txt); 
 	return $txt;
@@ -197,6 +198,7 @@ function _cp1251_to_utf8($txt)  {
 
 function _utf8_to_cp1251($txt)
 {  
+	global $_in_arr, $_out_arr;
 	$txt = str_replace($_out_arr,$_in_arr, $txt);  
 	return $txt;
 }

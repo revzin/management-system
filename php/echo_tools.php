@@ -13,6 +13,7 @@ define('MSG_SALARY_HIDDEN', 			'Зарплата скрыта из вежлив�
 define('MSG_LOGIN_TAKEN', 				'Логин занят:');
 define('MSG_NO_ASMY_WORKERS', 			'Наймите хотя бы одного монтажника');
 define('MSG_NO_CTL_WORKERS', 			'Наймите хотя бы одного контролёра');
+define('MSG_COMPANY_NAME',	 			'ООО "Вектор-Плюс"');
 
 define('MSG_ORDER_CREATED',				'Заказ на изготовление размещён');
 define('MSG_ORDER_ASSEMBLED',			'Изделие отмечено как собранное');
@@ -79,23 +80,23 @@ function ToolsKillHTML($str)
 	
 	$ret = '';
 	
-	$copying = FALSE;
+	$copying = TRUE;
 	
 	for ($i = 0; $i < strlen($str); $i += 1) {
-		if ('<' == $str[i])
+		if ('<' == $str[$i])
 			$copying = FALSE;
-		
-		if ('>' == $str[i])
-			$copying = TRUE;
 			
 		if ($copying)
-			$ret[] = $str[i];
+			$ret .= strval($str[$i]);
+			
+		if ('>' == $str[$i])
+			$copying = TRUE;
 	}
 	
-	$ret = str_replace('>', '=', $ret);
-	$ret = str_replace(',', '=', $ret);
-	$ret = str_replace('.', '=', $ret);
-	$ret = str_replace('"', '=', $ret);
+	$ret = str_replace('>', '', $ret);
+	$ret = str_replace(',', '', $ret);
+	$ret = str_replace('.', '', $ret);
+	$ret = str_replace('"', '', $ret);
 	return $ret;
 }
 

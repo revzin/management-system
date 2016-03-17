@@ -1,5 +1,5 @@
 @@install_database.sql
-CONN revzin/revzin
+CONN scott/tiger
 @@insert_dummies.sql
-@@insert_demo_irders.sql
+--@@insert_demo_irders.sql
 DISC
