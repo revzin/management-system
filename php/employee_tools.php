@@ -244,7 +244,7 @@ function AMSEmployeeCountRole($role)
 	$query = QueryStringReplace(QUERY_COUNT_ROLE, "emp_role", $role);
 	$rows = array();
 	$numrows = OracleQuickReadQuery($query, array("count"), $rows);
-	return intval($rows[0]);
+	return intval($rows[0]["count"]);
 }
 	
 function AMSEmployeeFillCredForm($html) 
