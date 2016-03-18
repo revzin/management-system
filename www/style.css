@@ -12,6 +12,15 @@ div {
 /* END DEBUG */
 
 
+/* lemongrab */
+.ACCEPTABLE {
+	border: 3px solid #FF0000;
+}
+
+.UNACCEPTABLE {
+	border: 3px solid #FF0000;
+}
+
 #header {
     text-align:center;
     padding:5px;

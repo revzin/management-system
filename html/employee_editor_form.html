@@ -1,5 +1,9 @@
 <h3> %%NAME%% %%SURNAME%%: Редактирование </h3>
-<form action = 'employee.php' method = 'POST'>
+<form action = 'employee.php' method = 'POST' id = 'empl'>
+
+	<!-- <input type="text" data-rule-valid='[{"key":"regexp","value":"\\d"}]' />
+	<script>$("#empl").lemongrab();</script>
+	-->
 	<!-- для отличения обновления сотрудника от создания нового -->
 	<input type = "hidden" name = "emp_id" value = "%%EMPLOYEEID%%" />
 	<input type = "hidden" name = "employee_editor_form" value = "TRUE" />

@@ -9,6 +9,8 @@ AMSEmployeeRedirectAuth();
 <title> Сотрудники </title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet" href="style.css">
+<script type="text/javascript" src="jquery-1.12.1.js"></script>
+<script type="text/javascript" src="jquery.lemongrab.js"></script>
 </head>
 <body>
 
