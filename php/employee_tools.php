@@ -79,7 +79,7 @@ function AMSEmployeeRoleToString($role)
 {
 	switch ($role) {
 		case AMS_ROLE_BOSS:
-			return 'босс';
+			return 'начальник';
 		case AMS_ROLE_ASMY_WRK:
 			return 'монтажник';
 		case AMS_ROLE_CTL:
@@ -93,7 +93,7 @@ function AMSEmployeeRoleToString($role)
 		//	return 'IT';
 		case AMS_ROLE_FIRED:
 		default:
-			return 'прошедший в жопу';
+			return 'уволенный';
 	}
 }
 
