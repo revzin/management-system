@@ -211,5 +211,37 @@ VALUES
 	16, CURRENT_TIMESTAMP, 11, 'Был уволен как криминальный элемент'
 );
 
+INSERT INTO employee
+(
+	emp_role, 
+	emp_name, 
+	emp_surname, 
+	emp_email, 
+	emp_phone, 
+	emp_salary, 
+	emp_login, 
+	emp_password
+)
+VALUES
+(
+	2,
+	'Суреп',
+	'Станиславович',
+	'ja_rastenine@plants-online.ru',
+	'88002000609',
+	10000,
+	'kaktus',
+	'kaktus'
+);
+
+INSERT INTO ejournal
+(
+	ej_empl, ej_timestamp, ej_author_id, ej_text
+)
+VALUES
+(
+	17, CURRENT_TIMESTAMP, 17, 'Принят на работу'
+);
+
 COMMIT;
 
