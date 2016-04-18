@@ -3,10 +3,12 @@
 PROMPT Создание внутренних ограничений таблицы employee
 ALTER TABLE employee
 	ADD CONSTRAINT i_pk_employee PRIMARY KEY (emp_id);
+	
+ALTER TABLE employee
+	ADD CONSTRAINT c_unique_emp_login UNIQUE (emp_login);
 
---ALTER TABLE employee
---	ADD CONSTRAINT c_unique_emp_login UNIQUE (emp_login);
-
+/* --------------------------------------------------------------- */	
+	
 PROMPT Создание внутренних ограничений таблицы unit
 ALTER TABLE unit
 	ADD CONSTRAINT i_pk_unit PRIMARY KEY (u_id);

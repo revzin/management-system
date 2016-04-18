@@ -27,5 +27,5 @@ INSERT INTO ejournal
 )
 VALUES
 (
-	10, CURRENT_TIMESTAMP, 10, 'Установил АСУ фирмы'
+	10, CURRENT_TIMESTAMP, 10, 'Установил АСУ ТП фирмы'
 );

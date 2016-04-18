@@ -1,30 +1,35 @@
 DISC
+
 SPOOL C:\revzin_install.log
 
-PROMPT ======== Установка базы данных АСУ (Г. Ревзин, ИУ4-82) =========
+PROMPT ======== Установка базы данных АСУ ТП (Г. Ревзин, ИУ4-82) =========
 
 PROMPT ==== Вход в СУБД ====
-@@start_session.sql
+@@01_start_session.sql
 PROMPT ==== Вход окончен ====
 
 PROMPT ==== Удаление БД ====
-@@drop_everything.sql
+@@02_drop_tables_cascade.sql
 PROMPT ==== БД удалена ====
 
 PROMPT ==== Создание определений таблиц ====
-@@create_tables.sql
+@@03_create_tables.sql
 PROMPT ==== Определения таблиц созданы ====
 
 PROMPT ==== Создание ограничений ====
-@@create_constraints.sql
+@@04_create_constraints.sql
 PROMPT ==== Ограничения созданы ====
 
 PROMPT ==== Создание триггеров автоинкремента ====
-@@create_triggers.sql
+@@05_create_triggers.sql
 PROMPT ==== Триггеры автоинкремента созданы ====
 
+PROMPT === Создание хранимых процедур ====
+@@06_create_procedures.sql
+PROMPT === Процедуры созданы ====
+
 PROMPT ==== Создание сотрудника АСУ по умолчанию ====
-@@create_default_employee.sql
+@@07_create_default_employee.sql
 PROMPT ==== Сотрудник создан, логин/пароль: system/manager ====
 
 PROMPT ======== Применение изменений =========
